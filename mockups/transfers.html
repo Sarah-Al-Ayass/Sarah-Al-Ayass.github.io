@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Analyse des transferts — Gardiens</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0A1124; --panel:#101A33; --panel2:#16223F; --line:#22304F; --line2:#1A2644;
+  --ink:#EEF2FB; --ink2:#A6B2CC; --ink3:#6E7A96;
+  --amb:#FFB020; --amb-soft:rgba(255,176,32,.12);
+  --pl:#A78BFA; --ll:#F472B6; --sa:#38BDF8; --bl:#F87171;
+  --good:#34D399; --bad:#F87171;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Barlow,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.mono{font-family:"JetBrains Mono",monospace}
+.app{width:1440px;height:1000px;display:flex;flex-direction:column;overflow:hidden}
+.top{height:56px;display:flex;align-items:center;gap:22px;padding:0 22px;border-bottom:1px solid var(--line);flex:none}
+.logo{display:flex;align-items:center;gap:10px;font-family:"Barlow Condensed";font-weight:700;font-size:21px;letter-spacing:.03em}
+.logo .b{width:30px;height:30px;border-radius:7px;background:var(--amb);display:grid;place-items:center}
+.logo em{font-style:normal;color:var(--amb)}
+.crumb{font-size:13px;color:var(--ink3)}
+.crumb b{color:var(--ink);font-weight:600}
+.sp{flex:1}
+.chip{font-size:12px;border:1px solid var(--line);border-radius:6px;padding:5px 10px;color:var(--ink2)}
+.chip b{color:var(--ink)}
+.mid{flex:1;display:grid;grid-template-columns:224px 1fr;min-height:0}
+.side{border-right:1px solid var(--line);padding:16px;display:flex;flex-direction:column;gap:16px}
+.fh{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-bottom:7px}
+.pg{display:flex;flex-direction:column;gap:3px}
+.pg span{display:flex;align-items:center;gap:9px;font-size:13.5px;color:var(--ink2);padding:7px 9px;border-radius:7px}
+.pg span.on{background:var(--panel2);color:var(--ink);box-shadow:inset 3px 0 0 var(--amb)}
+.pg i{width:7px;height:7px;border-radius:2px;background:var(--line)}
+.pg span.on i{background:var(--amb)}
+.sl{background:var(--panel2);border:1px solid var(--line);border-radius:7px;padding:7px 10px;font-size:13px;display:flex;justify-content:space-between;margin-bottom:6px}
+.sl small{color:var(--ink3)}
+.lg{display:flex;align-items:center;gap:8px;font-size:13px;padding:3px 0}
+.lg .cb{width:15px;height:15px;border-radius:4px;display:grid;place-items:center;font-size:10px;color:#0A1124;font-weight:700}
+.team{margin-top:auto;border:1px solid var(--line);border-radius:10px;padding:11px;font-size:12px;color:var(--ink2);line-height:1.6}
+.team b{color:var(--ink)}
+.team .me{color:var(--amb);font-weight:600}
+
+.main{padding:16px 18px;display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:min-content;gap:12px;min-width:0;overflow:hidden}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:13px 15px;min-width:0}
+.ct{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600}
+.ct small{font-weight:400;font-size:12px;color:var(--ink3)}
+.ct .r{margin-left:auto;display:flex;gap:12px;font-size:11.5px;font-weight:400;color:var(--ink2)}
+.ct .r i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+.hero{grid-column:span 12;display:flex;align-items:center;gap:18px;padding:14px 18px;background:linear-gradient(110deg,#16223F,#101A33 60%);}
+.hero .ph{width:62px;height:62px;border-radius:12px;background:#0D1630;border:1px solid var(--line);display:grid;place-items:center;font-family:"Barlow Condensed";font-weight:700;font-size:28px;color:var(--amb)}
+.hero h1{font-family:"Barlow Condensed";font-size:30px;font-weight:700;letter-spacing:.02em;line-height:1}
+.hero p{font-size:13px;color:var(--ink2);margin-top:5px}
+.route{display:flex;align-items:center;gap:10px;margin-left:24px}
+.club{border:1px solid var(--line);background:#0D1630;border-radius:8px;padding:7px 12px;font-size:12px;color:var(--ink2)}
+.club b{display:block;color:var(--ink);font-size:14px}
+.fee{margin-left:auto;text-align:right}
+.fee b{font-family:"Barlow Condensed";font-size:40px;color:var(--amb);line-height:1}
+.fee small{display:block;font-size:11px;color:var(--ink3);letter-spacing:.1em;text-transform:uppercase}
+.k{grid-column:span 3}
+.k .l{font-size:12px;color:var(--ink2)}
+.k .v{font-family:"Barlow Condensed";font-size:34px;font-weight:700;line-height:1.1;margin-top:3px}
+.k .v small{font-size:16px;color:var(--ink3);font-weight:500}
+.k .d{font-size:12px;color:var(--ink3)}
+.k .d b{font-weight:600}
+.c7{grid-column:span 7}.c5{grid-column:span 5}.c4{grid-column:span 4}.c8{grid-column:span 8}
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+th{text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600;padding:6px 7px;border-bottom:1px solid var(--line)}
+td{padding:8px 7px;border-bottom:1px solid var(--line2)}
+th.n,td.n{text-align:right}
+td.n{font-family:"JetBrains Mono";font-size:12px}
+tr.sel td{background:var(--amb-soft)}
+tr.sel td:first-child{box-shadow:inset 3px 0 0 var(--amb)}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:6px}
+.verdict{font-size:11px;font-weight:700;padding:2px 8px;border-radius:5px;letter-spacing:.03em}
+.pages{height:32px;border-top:1px solid var(--line);display:flex;align-items:stretch;padding:0 12px;font-size:12.5px;flex:none;background:#0D1630}
+.pages span{display:flex;align-items:center;padding:0 15px;color:var(--ink3);border-top:2px solid transparent}
+.pages span.on{color:var(--ink);font-weight:600;border-top-color:var(--amb)}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+.cmp div{background:var(--panel2);border-radius:8px;padding:9px 11px}
+.cmp small{font-size:11px;color:var(--ink3);display:block}
+.cmp b{font-family:"Barlow Condensed";font-size:26px}
+.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:10px}.steps div{background:var(--panel2);border-radius:8px;padding:10px 12px;font-size:13px;font-weight:600;border-top:2px solid var(--amb)}.steps b{display:block;font-family:'JetBrains Mono';color:var(--amb);font-size:11px;margin-bottom:3px}.steps small{display:block;font-weight:400;font-size:11.5px;color:var(--ink3);margin-top:3px;line-height:1.4}
+.note{font-size:12px;color:var(--ink2);line-height:1.5;margin-top:10px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="logo"><div class="b"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0A1124" stroke-width="2.4" stroke-linecap="round"><path d="M7 7h11l-3-3M17 17H6l3 3"/></svg></div>TRANSFER<em>LAB</em></div>
+    <div class="crumb">Analyse des transferts · 4 grands championnats · <b>Performances des gardiens</b></div>
+    <div class="sp"></div>
+    <div class="chip">Saisons <b>2017/18 – 2021/22</b></div>
+    <div class="chip">Méthode <b>CRISP-DM</b></div>
+  </div>
+  <div class="mid">
+    <aside class="side">
+      <div><div class="fh">Pages du rapport</div>
+        <div class="pg"><span><i></i>Statistiques équipe</span><span><i></i>Transferts joueurs</span><span><i></i>Attaquants</span><span><i></i>Milieux</span><span><i></i>Défenseurs</span><span class="on"><i></i>Gardiens</span><span><i></i>Études de cas</span></div></div>
+      <div><div class="fh">Filtres</div>
+        <div class="sl"><small>Poste</small>Gardien ▾</div>
+        <div class="sl"><small>Club</small>Liverpool ▾</div>
+        <div class="sl"><small>Joueur</small>Alisson ▾</div></div>
+      <div><div class="fh">Ligues</div>
+        <div class="lg"><span class="cb" style="background:var(--pl)">✓</span>Premier League</div>
+        <div class="lg"><span class="cb" style="background:var(--ll)">✓</span>La Liga</div>
+        <div class="lg"><span class="cb" style="background:var(--sa)">✓</span>Serie A</div>
+        <div class="lg"><span class="cb" style="background:var(--bl)">✓</span>Bundesliga</div></div>
+      <div class="team"><b>Répartition par poste</b><br>Défenseurs · Milieux · Attaquants<br><span class="me">Gardiens — Sarah</span><br><span style="color:var(--ink3)">Python · Excel · Power BI</span></div>
+    </aside>
+
+    <section class="main">
+      <div class="card hero">
+        <div class="ph">GK</div>
+        <div><h1>ALISSON BECKER</h1><p>Gardien · transfert 2018/19 · Serie A → Premier League</p></div>
+        <div class="route">
+          <div class="club">Départ<b>AS Roma</b></div>
+          <svg width="26" height="14" viewBox="0 0 26 14" fill="none" stroke="#FFB020" stroke-width="2" stroke-linecap="round"><path d="M1 7h22M17 1l6 6-6 6"/></svg>
+          <div class="club">Arrivée<b>Liverpool FC</b></div>
+        </div>
+        <div class="fee"><b>62,5 M€</b><small>Frais de transfert</small></div>
+      </div>
+
+      <div class="card k"><div class="l">Buts encaissés par Liverpool</div><div class="v">38 → 22</div><div class="d"><b style="color:var(--good)">▼ −42 %</b> 2017/18 → 2018/19</div></div>
+      <div class="card k"><div class="l">Points en championnat</div><div class="v">75 → 97</div><div class="d"><b style="color:var(--good)">▲ +22 pts</b> dès la 1re saison</div></div>
+      <div class="card k"><div class="l">Classement</div><div class="v">4ᵉ → 1ᵉʳ</div><div class="d">Champion de Premier League 2019/20</div></div>
+      <div class="card k"><div class="l">Penaltys arrêtés (Roma, 2017/18)</div><div class="v">3</div><div class="d">213 dégagements longs réussis sur 416</div></div>
+
+      <div class="card c7"><div class="ct">Impact sur l’équipe — Liverpool<small>· avant / après transfert</small>
+        <div class="r"><span><i style="background:#3A4A70"></i>Buts encaissés</span><span><i style="background:var(--amb);height:3px;vertical-align:2px"></i>Points</span></div></div>
+        <svg id="team" width="100%" height="300" viewBox="0 0 640 300"></svg>
+      </div>
+
+      <div class="card c5"><div class="ct">Transferts de gardiens les plus chers<small>· 2017–2022</small></div>
+        <table>
+          <thead><tr><th>Joueur</th><th>Transfert</th><th>Saison</th><th class="n">Frais</th></tr></thead>
+          <tbody>
+            <tr><td>Kepa Arrizabalaga</td><td><span class="dot" style="background:var(--ll)"></span>Athletic → Chelsea</td><td>2018/19</td><td class="n">80,0 M€</td></tr>
+            <tr class="sel"><td style="font-weight:600">Alisson Becker</td><td><span class="dot" style="background:var(--sa)"></span>Roma → Liverpool</td><td>2018/19</td><td class="n">62,5 M€</td></tr>
+            <tr><td>Ederson</td><td><span class="dot" style="background:#94A3B8"></span>Benfica → Man City</td><td>2017/18</td><td class="n">40,0 M€</td></tr>
+          </tbody>
+        </table>
+        <div class="fh" style="margin:16px 0 0">Alisson — buts encaissés en championnat</div>
+        <div class="cmp"><div><small>AS Roma · 2017/18</small><b>28</b></div><div><small>Liverpool · 2018/19</small><b style="color:var(--good)">22</b></div></div>
+        <div class="fh" style="margin:16px 0 6px">KPI suivis pour les gardiens</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <span class="chip">Buts encaissés / saison</span><span class="chip">Penaltys &amp; coups francs arrêtés</span><span class="chip">Dégagements réussis</span><span class="chip">Centres captés</span>
+        </div>
+      </div>
+
+      <div class="card c8"><div class="ct">Étude de cas comparée<small>· deux transferts, deux résultats</small></div>
+        <table>
+          <thead><tr><th>Joueur</th><th>Poste</th><th>Transfert</th><th class="n">Frais</th><th>Indicateur clé</th><th class="n">Avant</th><th class="n">Après</th><th>Verdict</th></tr></thead>
+          <tbody>
+            <tr class="sel"><td style="font-weight:600">Alisson Becker</td><td>Gardien</td><td>Roma → Liverpool · 2018</td><td class="n">62,5 M€</td><td>Buts encaissés (équipe)</td><td class="n">38</td><td class="n">22</td><td><span class="verdict" style="background:rgba(52,211,153,.14);color:var(--good)">RÉUSSI</span></td></tr>
+            <tr><td style="font-weight:600">Timo Werner</td><td>Attaquant</td><td>Leipzig → Chelsea · 2020</td><td class="n">53,0 M€</td><td>Buts en championnat</td><td class="n">28</td><td class="n">6</td><td><span class="verdict" style="background:rgba(248,113,113,.14);color:var(--bad)">DÉCEVANT</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card c4"><div class="ct">Recommandation</div>
+        <p class="note">Évaluer un transfert <b style="color:var(--ink)">par poste</b> et mesurer l’effet sur l’équipe, pas seulement sur le joueur. Les limites restent humaines : adaptation culturelle, entraîneur, vestiaire.</p>
+      </div>
+      <div class="card" style="grid-column:span 12"><div class="ct">Démarche CRISP-DM<small>· du jeu de données brut au tableau de bord</small></div>
+        <div class="steps">
+          <div><b>01</b>Compréhension du domaine<small>Comment évaluer un transfert ?</small></div>
+          <div><b>02</b>Exploration des données<small>Kaggle · FBref · 3 sources Excel/CSV</small></div>
+          <div><b>03</b>Préparation<small>Pandas : doublons, valeurs manquantes, filtrage par poste</small></div>
+          <div><b>04</b>Modélisation<small>Power Query + Power BI : moyennes, médianes, écarts-types</small></div>
+          <div><b>05</b>Déploiement<small>Tableau de bord interactif &amp; recommandations</small></div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <div class="pages"><span>Statistiques équipe</span><span>Transferts joueurs</span><span>Attaquants</span><span class="on">Gardiens</span><span>Études de cas</span></div>
+</div>
+<script>
+(function(){const S=['2017/18','2018/19','2019/20'],GA=[38,22,33],PTS=[75,97,99],RK=['4ᵉ','2ᵉ','1ᵉʳ'];
+const W=640,H=300,L=40,R=40,T=22,B=40,pw=W-L-R,ph=H-T-B,n=3,bw=pw/n;let s='';
+for(let i=0;i<=4;i++){const y=T+ph-ph*i/4;s+=`<line x1="${L}" x2="${W-R}" y1="${y}" y2="${y}" stroke="#1A2644"/><text x="${L-8}" y="${y+4}" font-size="11" fill="#6E7A96" text-anchor="end" font-family="JetBrains Mono">${i*10}</text><text x="${W-R+8}" y="${y+4}" font-size="11" fill="#C98A10" font-family="JetBrains Mono">${60+i*10}</text>`;}
+GA.forEach((v,i)=>{const h=v/40*ph,x=L+i*bw+bw*.28;s+=`<rect x="${x}" y="${T+ph-h}" width="${bw*.44}" height="${h}" rx="4" fill="${i==0?'#2A3A63':'#3A4A70'}"/><text x="${x+bw*.22}" y="${T+ph-h-8}" font-size="13" font-weight="700" fill="#EEF2FB" text-anchor="middle" font-family="JetBrains Mono">${v}</text>`;});
+const pts=PTS.map((v,i)=>[L+i*bw+bw/2,T+ph-(v-60)/40*ph]);
+s+=`<polyline points="${pts.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#FFB020" stroke-width="3"/>`;
+pts.forEach((p,i)=>{const lx=p[0]+(i==2?-112:(i==1?-49:14)),ly=p[1]+(i==0?8:12);s+=`<circle cx="${p[0]}" cy="${p[1]}" r="5" fill="#0A1124" stroke="#FFB020" stroke-width="3"/><rect x="${lx}" y="${ly}" width="98" height="22" rx="5" fill="#0A1124" stroke="#FFB020" stroke-opacity=".5"/><text x="${lx+49}" y="${ly+15}" font-size="12" font-weight="700" fill="#FFB020" text-anchor="middle">${PTS[i]} pts · ${RK[i]}</text>`});
+S.forEach((t,i)=>s+=`<text x="${L+i*bw+bw/2}" y="${H-18}" font-size="12.5" fill="#A6B2CC" text-anchor="middle">${t}</text>`);
+s+=`<line x1="${L+bw}" x2="${L+bw}" y1="${T-8}" y2="${T+ph}" stroke="#FFB020" stroke-dasharray="4 4" opacity=".6"/><text x="${L+bw-6}" y="${T+ph-8}" font-size="11" fill="#FFB020" text-anchor="end">arrivée d’Alisson ↗</text>`;
+document.getElementById('team').innerHTML=s;})();
+</script>
+</body>
+</html>

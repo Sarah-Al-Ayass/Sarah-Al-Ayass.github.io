@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>SST Dashboard</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root{
+  --navy:#1C1F24; --navy-2:#262A31; --navy-3:#343943;
+  --yellow:#FFB81C; --yellow-soft:#FFF1CC;
+  --bg:#F6F5F1; --card:#FFFFFF; --line:#E6EAF1; --line-2:#EEF1F6;
+  --ink:#1C1F24; --ink-2:#4A5A72; --ink-3:#8593A8;
+  --green:#18A06B; --green-soft:#E3F6EE;
+  --red:#E5484D; --red-soft:#FDECEC;
+  --blue:#3B6FD8; --blue-soft:#E8EFFC;
+  --amber:#D98A0B; --amber-soft:#FDF2DE;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased;font-feature-settings:"cv11","ss01","tnum"}
+.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}
+
+/* Sidebar */
+.side{background:var(--navy);color:#D0D3D9;padding:22px 16px;display:flex;flex-direction:column;gap:6px}
+.brand{display:flex;align-items:center;gap:11px;padding:4px 8px 22px}
+.logo{width:38px;height:38px;border-radius:11px;background:var(--yellow);display:grid;place-items:center;box-shadow:0 6px 16px rgba(255,184,28,.25)}
+.brand b{display:block;color:#fff;font-size:17px;letter-spacing:-.01em}
+.brand small{font-size:11px;color:#9AA0AA;letter-spacing:.02em}
+.navlabel{font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:#7D838E;padding:14px 10px 6px}
+.nav a{display:flex;align-items:center;gap:11px;padding:9px 10px;border-radius:9px;font-size:13.5px;color:#C2C5CC;text-decoration:none;font-weight:500}
+.nav a svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;opacity:.9}
+.nav a.on{background:var(--navy-3);color:#fff}
+.nav a.on svg{stroke:var(--yellow)}
+.nav .badge{margin-left:auto;font-size:11px;font-weight:600;background:var(--yellow);color:var(--navy);padding:1px 7px;border-radius:20px}
+.nav .badge.r{background:var(--red);color:#fff}
+.school{margin-top:auto;background:var(--navy-2);border:1px solid #3A404B;border-radius:13px;padding:13px;display:flex;gap:10px;align-items:center}
+.crest{width:36px;height:36px;border-radius:10px;background:#fff;display:grid;place-items:center;font-weight:800;color:var(--navy);font-size:13px}
+.school b{color:#fff;font-size:12.5px;display:block}
+.school small{font-size:11px;color:#9AA0AA}
+
+/* Main */
+main{padding:22px 28px 28px;display:flex;flex-direction:column;gap:18px}
+.top{display:flex;align-items:center;gap:16px}
+.top h1{font-size:22px;letter-spacing:-.02em;font-weight:700}
+.top p{font-size:13px;color:var(--ink-3);margin-top:3px}
+.live{display:inline-flex;align-items:center;gap:7px;background:var(--green-soft);color:var(--green);font-size:12px;font-weight:600;padding:5px 10px;border-radius:20px;margin-left:10px;vertical-align:4px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(24,160,107,.18)}
+.spacer{flex:1}
+.search{display:flex;align-items:center;gap:9px;background:#fff;border:1px solid var(--line);border-radius:10px;padding:9px 13px;width:290px;color:var(--ink-3);font-size:13px}
+.search kbd{margin-left:auto;font-family:inherit;font-size:11px;border:1px solid var(--line);border-radius:5px;padding:1px 6px;color:var(--ink-3)}
+.iconbtn{width:39px;height:39px;border-radius:10px;background:#fff;border:1px solid var(--line);display:grid;place-items:center;position:relative}
+.iconbtn .dot{position:absolute;top:8px;right:9px;width:8px;height:8px;border-radius:50%;background:var(--red);border:2px solid #fff}
+.user{display:flex;align-items:center;gap:10px;padding-left:6px}
+.avatar{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#FFB81C,#E9A93A);display:grid;place-items:center;font-weight:700;color:var(--navy);font-size:13px}
+.user b{font-size:13px;display:block}
+.user small{font-size:11.5px;color:var(--ink-3)}
+.btn{background:var(--navy);color:#fff;font-size:13px;font-weight:600;padding:10px 15px;border-radius:10px;display:inline-flex;align-items:center;gap:7px}
+
+/* KPI */
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:14px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 17px}
+.kpi .h{display:flex;align-items:center;justify-content:space-between;font-size:12.5px;color:var(--ink-2);font-weight:500}
+.kpi .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center}
+.kpi .ic svg{width:16px;height:16px;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.kpi .v{font-size:27px;font-weight:700;letter-spacing:-.025em;margin-top:10px}
+.kpi .v span{font-size:15px;color:var(--ink-3);font-weight:500;letter-spacing:0}
+.kpi .s{font-size:12px;color:var(--ink-3);margin-top:6px;display:flex;align-items:center;gap:6px}
+.up{color:var(--green);font-weight:600}
+.dn{color:var(--red);font-weight:600}
+.meter{height:5px;background:var(--line-2);border-radius:4px;margin-top:10px;overflow:hidden}
+.meter i{display:block;height:100%;border-radius:4px}
+.kpi.hero{background:var(--navy);border-color:var(--navy);color:#fff}
+.kpi.hero .h{color:#B3B8C1}
+.kpi.hero .s{color:#B3B8C1}
+.kpi.hero .meter{background:#3A404B}
+
+/* Cards */
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px}
+.ch{display:flex;align-items:center;gap:10px;padding:16px 18px 0}
+.ch h3{font-size:15px;font-weight:650;letter-spacing:-.01em}
+.ch .sub{font-size:12px;color:var(--ink-3)}
+.seg{margin-left:auto;display:flex;background:var(--bg);border-radius:9px;padding:3px;gap:2px}
+.seg span{font-size:12px;padding:5px 10px;border-radius:7px;color:var(--ink-2);font-weight:500}
+.seg span.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(28,31,36,.08)}
+
+.row1{display:grid;grid-template-columns:1.62fr 1fr;gap:16px}
+.mapwrap{position:relative;margin:14px 18px 18px;border-radius:12px;overflow:hidden;border:1px solid var(--line);height:398px;background:#EEF2F7}
+.mapwrap svg{display:block}
+.maplegend{position:absolute;left:12px;bottom:12px;background:rgba(255,255,255,.96);border:1px solid var(--line);border-radius:10px;padding:9px 12px;display:flex;gap:14px;font-size:11.5px;color:var(--ink-2);box-shadow:0 4px 14px rgba(28,31,36,.08)}
+.maplegend span{display:flex;align-items:center;gap:6px}
+.maplegend i{width:14px;height:4px;border-radius:2px;display:block}
+.mapctl{position:absolute;right:12px;top:12px;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:9px;overflow:hidden;box-shadow:0 4px 14px rgba(28,31,36,.08)}
+.mapctl b{width:32px;height:32px;display:grid;place-items:center;font-size:16px;color:var(--ink-2);font-weight:500}
+.mapctl b+b{border-top:1px solid var(--line)}
+.popup{position:absolute;left:10px;top:164px;background:#fff;border-radius:12px;padding:12px 14px;width:244px;box-shadow:0 12px 32px rgba(28,31,36,.18);border:1px solid var(--line)}
+.popup:after{content:"";position:absolute;right:-7px;top:66px;width:14px;height:14px;background:#fff;transform:rotate(45deg);border-right:1px solid var(--line);border-top:1px solid var(--line)}
+.popup .t{white-space:nowrap;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:650}
+.popup .tag{font-size:10.5px;font-weight:600;background:var(--green-soft);color:var(--green);padding:2px 7px;border-radius:20px;margin-left:auto}
+.popup .g{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}
+.popup .g div{font-size:11px;color:var(--ink-3)}
+.popup .g b{display:block;font-size:13px;color:var(--ink);margin-top:1px}
+
+.fleet{padding:6px 18px 10px}
+.fl{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line-2)}
+.fl:last-child{border-bottom:0}
+.bus{width:40px;height:40px;border-radius:11px;display:grid;place-items:center;font-size:12.5px;font-weight:700}
+.fl .n{font-size:13.5px;font-weight:600;display:flex;align-items:center;gap:8px}
+.fl .d{font-size:12px;color:var(--ink-3);margin-top:2px}
+.prog{height:4px;background:var(--line-2);border-radius:3px;margin-top:7px;overflow:hidden}
+.prog i{display:block;height:100%;border-radius:3px}
+.fl .r{text-align:right}
+.fl .eta{font-size:14px;font-weight:650}
+.pill{display:inline-block;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:4px}
+.p-g{background:var(--green-soft);color:var(--green)}
+.p-a{background:var(--amber-soft);color:var(--amber)}
+.p-r{background:var(--red-soft);color:var(--red)}
+.p-b{background:var(--blue-soft);color:var(--blue)}
+
+.row2{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:16px}
+.chart{padding:12px 18px 16px}
+.legend{display:flex;gap:14px;font-size:11.5px;color:var(--ink-2);margin-left:auto}
+.legend span{display:flex;align-items:center;gap:6px}
+.legend i{width:9px;height:9px;border-radius:3px;display:block}
+
+.alerts{padding:8px 18px 14px}
+.al{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line-2)}
+.al:last-child{border-bottom:0}
+.al .ai{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;flex:none}
+.al .ai svg{width:15px;height:15px;fill:none;stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.al b{font-size:13px;font-weight:600;display:block}
+.al p{font-size:12px;color:var(--ink-3);margin-top:2px;line-height:1.4}
+.al time{margin-left:auto;font-size:11.5px;color:var(--ink-3);white-space:nowrap}
+
+.pay{padding:12px 18px 16px}
+.paybig{display:flex;align-items:baseline;gap:8px}
+.paybig b{font-size:28px;letter-spacing:-.025em}
+.paybig span{font-size:13px;color:var(--ink-3)}
+.stack{display:flex;height:10px;border-radius:6px;overflow:hidden;margin:14px 0 14px;gap:2px}
+.prow{display:flex;align-items:center;font-size:12.5px;padding:7px 0;color:var(--ink-2)}
+.prow i{width:9px;height:9px;border-radius:3px;margin-right:9px}
+.prow b{width:76px;text-align:right;color:var(--ink);font-weight:600}
+.prow em{font-style:normal;color:var(--ink-3);margin-left:auto;width:48px;text-align:right;font-size:12px}
+.paynote{margin-top:10px;background:var(--yellow-soft);border-radius:10px;padding:10px 12px;font-size:12px;color:#7A5B00;display:flex;gap:9px;align-items:center}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C1F24" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 10h16"/><path d="M7 21v-2M17 21v-2"/><circle cx="8" cy="13.5" r=".6" fill="#1C1F24"/><circle cx="16" cy="13.5" r=".6" fill="#1C1F24"/></svg>
+      </div>
+      <div><b>SST</b><small>Smart School Transport</small></div>
+    </div>
+    <nav class="nav">
+      <a class="on"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>Overview</a>
+      <a><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0 1 19 9.5C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>Live Tracking<span class="badge">18</span></a>
+      <a><svg viewBox="0 0 24 24"><circle cx="6" cy="19" r="2"/><circle cx="18" cy="5" r="2"/><path d="M8 19h8.5a3.5 3.5 0 0 0 0-7h-9a3.5 3.5 0 0 1 0-7H16"/></svg>Routes &amp; Stops</a>
+      <a><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 10h16M7 21v-2M17 21v-2"/></svg>Fleet</a>
+      <div class="navlabel">People</div>
+      <a><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg>Students</a>
+      <a><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Drivers &amp; Aides</a>
+      <a><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 14a6.5 6.5 0 0 1 3.5 6"/></svg>Parents</a>
+      <div class="navlabel">Operations</div>
+      <a><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="3"/><path d="M3 9h18M8 2v4M16 2v4"/><path d="m9 15 2 2 4-4"/></svg>Attendance</a>
+      <a><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Messages<span class="badge r">5</span></a>
+      <a><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20M6 15h4"/></svg>Payments</a>
+      <a><svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>Reports</a>
+    </nav>
+    <div class="school">
+      <div class="crest">CH</div>
+      <div><b>Cedar Hills Intl. School</b><small>668 riders · 20 buses</small></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="top">
+      <div>
+        <h1>Good morning, Rania <span class="live"><i></i>Morning run live</span></h1>
+        <p>Friday, 2 October 2026 · 18 of 20 buses on the road · last sync 4 s ago</p>
+      </div>
+      <div class="spacer"></div>
+      <div class="search">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#8593A8" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        Search student, bus or route…<kbd>⌘K</kbd>
+      </div>
+      <div class="iconbtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#4A5A72" stroke-width="1.9" stroke-linecap="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/></svg><span class="dot"></span></div>
+      <div class="btn"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#FFB81C" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Broadcast</div>
+      <div class="user"><div class="avatar">RH</div><div><b>Rania Haddad</b><small>Transport Manager</small></div></div>
+    </div>
+
+    <section class="kpis">
+      <div class="kpi hero">
+        <div class="h">Students on board<div class="ic" style="background:#3A404B"><svg viewBox="0 0 24 24" stroke="#FFB81C"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></div></div>
+        <div class="v">642 <span>/ 668</span></div>
+        <div class="meter"><i style="width:96%;background:var(--yellow)"></i></div>
+        <div class="s">26 marked absent by parents</div>
+      </div>
+      <div class="kpi">
+        <div class="h">Buses on route<div class="ic" style="background:var(--blue-soft)"><svg viewBox="0 0 24 24" stroke="#3B6FD8"><rect x="4" y="3" width="16" height="14" rx="3"/><path d="M4 10h16M7 21v-2M17 21v-2"/></svg></div></div>
+        <div class="v">18 <span>/ 20</span></div>
+        <div class="s">2 on standby · 0 breakdowns</div>
+      </div>
+      <div class="kpi">
+        <div class="h">On-time arrival<div class="ic" style="background:var(--green-soft)"><svg viewBox="0 0 24 24" stroke="#18A06B"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div></div>
+        <div class="v">96.4<span>%</span></div>
+        <div class="s"><span class="up">▲ 3.1 pts</span> vs last month</div>
+      </div>
+      <div class="kpi">
+        <div class="h">Avg. ride time<div class="ic" style="background:var(--amber-soft)"><svg viewBox="0 0 24 24" stroke="#D98A0B"><path d="M5 18 12 6l7 12"/><path d="M8.5 12h7"/></svg></div></div>
+        <div class="v">24<span> min</span></div>
+        <div class="s"><span class="up">▼ 4 min</span> after route optimisation</div>
+      </div>
+      <div class="kpi">
+        <div class="h">Open alerts<div class="ic" style="background:var(--red-soft)"><svg viewBox="0 0 24 24" stroke="#E5484D"><path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17h.01"/></svg></div></div>
+        <div class="v">3</div>
+        <div class="s">1 delay · 1 no-show · 1 message</div>
+      </div>
+    </section>
+
+    <section class="row1">
+      <div class="card">
+        <div class="ch"><h3>Live fleet map</h3><span class="sub">· Updated every 5 s via GPS</span>
+          <div class="seg"><span class="on">Morning</span><span>Afternoon</span><span>Activities</span></div>
+        </div>
+        <div class="mapwrap">
+          <svg width="100%" height="398" viewBox="0 0 780 398" preserveAspectRatio="xMidYMid slice">
+            <rect width="780" height="398" fill="#EEF2F7"/>
+            <!-- park & water -->
+            <path d="M560 0 C 590 60, 640 90, 700 110 C 740 124, 760 150, 780 160 L780 0 Z" fill="#DCE9F7"/>
+            <rect x="96" y="250" width="150" height="96" rx="14" fill="#DDEFE3"/>
+            <rect x="470" y="232" width="110" height="70" rx="12" fill="#DDEFE3"/>
+            <!-- blocks -->
+            <g fill="#E3E8F0">
+              <rect x="30" y="30" width="110" height="70" rx="6"/><rect x="160" y="30" width="120" height="70" rx="6"/><rect x="300" y="30" width="110" height="70" rx="6"/><rect x="430" y="30" width="100" height="70" rx="6"/>
+              <rect x="30" y="122" width="110" height="100" rx="6"/><rect x="160" y="122" width="120" height="100" rx="6"/><rect x="300" y="122" width="110" height="100" rx="6"/><rect x="430" y="122" width="120" height="88" rx="6"/><rect x="600" y="160" width="160" height="60" rx="6"/>
+              <rect x="270" y="250" width="170" height="96" rx="6"/><rect x="600" y="240" width="160" height="106" rx="6"/>
+              <rect x="30" y="250" width="50" height="96" rx="6"/><rect x="460" y="320" width="120" height="60" rx="6"/>
+            </g>
+            <!-- roads -->
+            <g stroke="#FFFFFF" stroke-width="12" fill="none" stroke-linecap="round">
+              <path d="M0 112 H780"/><path d="M0 236 H780"/><path d="M150 0 V398"/><path d="M290 0 V398"/><path d="M420 0 V398"/><path d="M590 120 V398"/><path d="M0 360 H780"/>
+            </g>
+            <g stroke="#FFFFFF" stroke-width="20" fill="none" stroke-linecap="round"><path d="M-10 300 C 200 290, 380 200, 560 180 S 760 130, 800 120"/></g>
+            <g stroke="#E6EAF1" stroke-width="1" fill="none"><path d="M-10 300 C 200 290, 380 200, 560 180 S 760 130, 800 120"/></g>
+            <!-- routes -->
+            <path d="M40 112 H150 V236 H290 V236 H420 V160" stroke="#1C1F24" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" opacity=".9"/>
+            <path d="M740 360 H590 V236 H420" stroke="#FFB81C" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M290 20 V112 H420 V160" stroke="#3B6FD8" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-dasharray="1 0"/>
+            <path d="M760 130 C 700 145, 620 168, 560 180 C 500 186, 450 188, 420 190" stroke="#18A06B" stroke-width="5" fill="none" stroke-linecap="round"/>
+            <!-- stops -->
+            <g fill="#fff" stroke="#1C1F24" stroke-width="2.5">
+              <circle cx="40" cy="112" r="5"/><circle cx="150" cy="180" r="5"/><circle cx="220" cy="236" r="5"/>
+            </g>
+            <g fill="#fff" stroke="#D99A00" stroke-width="2.5"><circle cx="740" cy="360" r="5"/><circle cx="590" cy="300" r="5"/><circle cx="510" cy="236" r="5"/></g>
+            <g fill="#fff" stroke="#3B6FD8" stroke-width="2.5"><circle cx="290" cy="20" r="5"/><circle cx="290" cy="80" r="5"/></g>
+            <g fill="#fff" stroke="#18A06B" stroke-width="2.5"><circle cx="760" cy="130" r="5"/><circle cx="640" cy="164" r="5"/></g>
+            <!-- school -->
+            <g transform="translate(420 168)">
+              <circle r="26" fill="#1C1F24" opacity=".08"/>
+              <rect x="-17" y="-17" width="34" height="34" rx="10" fill="#1C1F24"/>
+              <path d="M-8 1 0-6 8 1M-6 0v7h12V0" stroke="#FFB81C" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+            </g>
+            <g transform="translate(446 176)"><rect width="104" height="22" rx="6" fill="#1C1F24"/><text x="10" y="15" font-size="11" font-weight="600" fill="#fff" font-family="Inter">Cedar Hills Intl.</text></g>
+            <!-- buses -->
+            <g font-family="Inter" font-size="10" font-weight="700" text-anchor="middle">
+              <g transform="translate(290 236)"><circle r="20" fill="#1C1F24" opacity=".14"/><circle r="14" fill="#1C1F24" stroke="#fff" stroke-width="3"/><text y="3.5" fill="#fff">07</text></g>
+              <g transform="translate(590 268)"><circle r="14" fill="#FFB81C" stroke="#fff" stroke-width="3"/><text y="3.5" fill="#1C1F24">12</text></g>
+              <g transform="translate(290 54)"><circle r="14" fill="#3B6FD8" stroke="#fff" stroke-width="3"/><text y="3.5" fill="#fff">03</text></g>
+              <g transform="translate(700 146)"><circle r="20" fill="#E5484D" opacity=".18"/><circle r="14" fill="#E5484D" stroke="#fff" stroke-width="3"/><text y="3.5" fill="#fff">15</text></g>
+              <g transform="translate(150 140)"><circle r="12" fill="#1C1F24" stroke="#fff" stroke-width="3" opacity=".55"/><text y="3.5" fill="#fff" font-size="9">09</text></g>
+            </g>
+          </svg>
+          <div class="popup">
+            <div class="t"><span class="bus" style="flex:none;width:26px;height:26px;border-radius:8px;background:var(--navy);color:#fff;font-size:11px">07</span>Route A · North Loop<span class="tag">On time</span></div>
+            <div class="g">
+              <div>Driver<b>Khalil Mansour</b></div>
+              <div>Speed<b>32 km/h</b></div>
+              <div>On board<b>38 / 40</b></div>
+              <div>ETA school<b>07:52</b></div>
+            </div>
+          </div>
+          <div class="mapctl"><b>+</b><b>−</b></div>
+          <div class="maplegend">
+            <span><i style="background:#1C1F24"></i>Route A</span>
+            <span><i style="background:#FFB81C"></i>Route B</span>
+            <span><i style="background:#3B6FD8"></i>Route C</span>
+            <span><i style="background:#18A06B"></i>Route D</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><h3>Active buses</h3><span class="sub">· sorted by ETA</span><div class="seg"><span class="on">All 18</span><span>Delayed</span></div></div>
+        <div class="fleet">
+          <div class="fl">
+            <div class="bus" style="background:var(--blue-soft);color:var(--blue)">03</div>
+            <div><div class="n">Route C · Hillside</div><div class="d">Tala Rizk · 31/32 on board</div><div class="prog"><i style="width:88%;background:var(--blue)"></i></div></div>
+            <div class="r"><div class="eta">07:46</div><span class="pill p-g">On time</span></div>
+          </div>
+          <div class="fl">
+            <div class="bus" style="background:#E7EBF2;color:var(--navy)">07</div>
+            <div><div class="n">Route A · North Loop</div><div class="d">Khalil Mansour · 38/40 on board</div><div class="prog"><i style="width:72%;background:var(--navy)"></i></div></div>
+            <div class="r"><div class="eta">07:52</div><span class="pill p-g">On time</span></div>
+          </div>
+          <div class="fl">
+            <div class="bus" style="background:var(--yellow-soft);color:#9A7300">12</div>
+            <div><div class="n">Route B · Riverside</div><div class="d">Adam Farah · 44/45 on board</div><div class="prog"><i style="width:58%;background:var(--yellow)"></i></div></div>
+            <div class="r"><div class="eta">07:55</div><span class="pill p-b">Early 2m</span></div>
+          </div>
+          <div class="fl">
+            <div class="bus" style="background:var(--green-soft);color:var(--green)">21</div>
+            <div><div class="n">Route E · Old Town</div><div class="d">Nour Haidar · 29/30 on board</div><div class="prog"><i style="width:51%;background:var(--green)"></i></div></div>
+            <div class="r"><div class="eta">07:57</div><span class="pill p-g">On time</span></div>
+          </div>
+          <div class="fl">
+            <div class="bus" style="background:var(--red-soft);color:var(--red)">15</div>
+            <div><div class="n">Route D · Lakeview</div><div class="d">Georges Saab · 36/41 on board</div><div class="prog"><i style="width:34%;background:var(--red)"></i></div></div>
+            <div class="r"><div class="eta">08:06</div><span class="pill p-r">+9 min</span></div>
+          </div>
+          <div class="fl">
+            <div class="bus" style="background:#E7EBF2;color:var(--navy)">09</div>
+            <div><div class="n">Route F · East Gate</div><div class="d">Maya Khoury · 22/24 on board</div><div class="prog"><i style="width:22%;background:var(--navy)"></i></div></div>
+            <div class="r"><div class="eta">08:01</div><span class="pill p-a">Traffic</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="row2">
+      <div class="card">
+        <div class="ch"><h3>Punctuality this week</h3>
+          <div class="legend"><span><i style="background:var(--navy)"></i>On time</span><span><i style="background:var(--yellow)"></i>Late</span></div>
+        </div>
+        <div class="chart">
+          <svg width="100%" height="210" viewBox="0 0 440 210">
+            <g font-family="Inter" font-size="10.5" fill="#8593A8">
+              <g stroke="#EEF1F6"><line x1="34" x2="440" y1="20" y2="20"/><line x1="34" x2="440" y1="65" y2="65"/><line x1="34" x2="440" y1="110" y2="110"/><line x1="34" x2="440" y1="155" y2="155"/></g>
+              <line x1="34" x2="440" y1="178" y2="178" stroke="#D5DBE5"/>
+              <text x="26" y="24" text-anchor="end">40</text><text x="26" y="69" text-anchor="end">30</text><text x="26" y="114" text-anchor="end">20</text><text x="26" y="159" text-anchor="end">10</text>
+            </g>
+            <!-- bars: trips per day: 40 trips; scale 4.5px per trip from 178 -->
+            <g>
+              <!-- Mon 38/2 -->
+              <rect x="60" y="15" width="34" height="9" rx="3" fill="#FFB81C"/><rect x="60" y="26" width="34" height="152" rx="4" fill="#1C1F24"/>
+              <!-- Tue 37/3 -->
+              <rect x="138" y="20" width="34" height="11" rx="3" fill="#FFB81C"/><rect x="138" y="33" width="34" height="145" rx="4" fill="#1C1F24"/>
+              <!-- Wed 39/1 -->
+              <rect x="216" y="20" width="34" height="5" rx="2" fill="#FFB81C"/><rect x="216" y="27" width="34" height="151" rx="4" fill="#1C1F24"/>
+              <!-- Thu 39/1 -->
+              <rect x="294" y="20" width="34" height="5" rx="2" fill="#FFB81C"/><rect x="294" y="27" width="34" height="151" rx="4" fill="#1C1F24"/>
+              <!-- Fri partial 17/1 -->
+              <rect x="372" y="94" width="34" height="5" rx="2" fill="#FFB81C"/><rect x="372" y="101" width="34" height="77" rx="4" fill="#1C1F24" opacity=".9"/>
+              <rect x="372" y="20" width="34" height="72" rx="4" fill="none" stroke="#C9D2DF" stroke-dasharray="3 3"/>
+            </g>
+            <g font-family="Inter" font-size="11" fill="#4A5A72" text-anchor="middle">
+              <text x="77" y="196">Mon</text><text x="155" y="196">Tue</text><text x="233" y="196">Wed</text><text x="311" y="196">Thu</text><text x="389" y="196" font-weight="700" fill="#1C1F24">Today</text>
+            </g>
+            <g font-family="Inter" font-size="10.5" font-weight="600" fill="#1C1F24" text-anchor="middle">
+              <text x="77" y="10">95%</text><text x="155" y="14">93%</text><text x="233" y="14">98%</text><text x="311" y="14">98%</text><text x="389" y="88">94%</text>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><h3>Live alerts</h3><span class="sub">· 3 open</span><span style="margin-left:auto;font-size:12px;color:var(--blue);font-weight:600">View all</span></div>
+        <div class="alerts">
+          <div class="al">
+            <div class="ai" style="background:var(--red-soft)"><svg viewBox="0 0 24 24" stroke="#E5484D"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div>
+            <div><b>Bus 15 running 9 min late</b><p>Roadworks on Lake Rd. 41 parents notified automatically.</p></div><time>07:41</time>
+          </div>
+          <div class="al">
+            <div class="ai" style="background:var(--amber-soft)"><svg viewBox="0 0 24 24" stroke="#D98A0B"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></div>
+            <div><b>No-show at stop B4</b><p>Lara S. (Grade 3) not scanned. Parent contacted.</p></div><time>07:33</time>
+          </div>
+          <div class="al">
+            <div class="ai" style="background:var(--blue-soft)"><svg viewBox="0 0 24 24" stroke="#3B6FD8"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div>
+            <div><b>New message from a parent</b><p>"Can Omar be dropped at his grandmother's today?"</p></div><time>07:28</time>
+          </div>
+          <div class="al">
+            <div class="ai" style="background:var(--green-soft)"><svg viewBox="0 0 24 24" stroke="#18A06B"><path d="m5 12 4 4 10-10"/></svg></div>
+            <div><b>Bus 03 arrived at school</b><p>All 31 students checked in by NFC card.</p></div><time>07:46</time>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="ch"><h3>October collections</h3><span class="seg"><span class="on">Month</span><span>Term</span></span></div>
+        <div class="pay">
+          <div class="paybig"><b>$48,250</b><span>of $58,900 billed</span></div>
+          <div class="stack">
+            <i style="width:82%;background:var(--navy)"></i>
+            <i style="width:11%;background:var(--yellow)"></i>
+            <i style="width:7%;background:var(--red)"></i>
+          </div>
+          <div class="prow"><i style="background:var(--navy)"></i>Paid online<em>82%</em><b>$48,250</b></div>
+          <div class="prow"><i style="background:var(--yellow)"></i>Pending<em>11%</em><b>$6,480</b></div>
+          <div class="prow"><i style="background:var(--red)"></i>Overdue<em>7%</em><b>$4,170</b></div>
+          <div class="paynote">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9A7300" stroke-width="2" stroke-linecap="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg>
+            Auto-reminders scheduled for 23 families
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+</body>
+</html>

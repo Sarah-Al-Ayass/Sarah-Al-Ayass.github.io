@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pangea Comply — Audit</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#13232A; --ink2:#4B4A63; --ink3:#8C8BA3;
+  --paper:#F7F6F2; --card:#FFFFFF; --line:#E7E5DE; --line2:#F0EEE8;
+  --violet:#0E6E6B; --violet2:#14A098; --violet-soft:#E2F3F1;
+  --side:#0D2B2E;
+  --hi:#D6453D; --hi-soft:#FCE9E7; --hi-mark:#F9D3CF;
+  --md:#C9820E; --md-soft:#FDF2DC; --md-mark:#F8E2B0;
+  --lo:#2F7DD1; --lo-soft:#E6F0FB; --lo-mark:#CFE2F7;
+  --ok:#1F9466; --ok-soft:#E2F4EC;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"IBM Plex Sans",system-ui,sans-serif;background:var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased}
+.mono{font-family:"IBM Plex Mono",ui-monospace,monospace}
+.app{display:grid;grid-template-columns:232px 1fr;width:1440px;height:1000px;overflow:hidden}
+
+/* sidebar */
+.side{background:var(--side);color:#B6CBC9;padding:22px 14px;display:flex;flex-direction:column;gap:4px}
+.brand{display:flex;align-items:center;gap:11px;padding:2px 8px 24px}
+.logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#14A098,#0E6E6B);display:grid;place-items:center}
+.brand b{color:#fff;font-size:16px;display:block;letter-spacing:-.01em}
+.brand small{font-size:10.5px;color:#7FA09D;letter-spacing:.08em;text-transform:uppercase}
+.nl{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#5F8582;padding:16px 10px 6px}
+.side a{display:flex;align-items:center;gap:11px;padding:8px 10px;border-radius:8px;font-size:13.5px;font-weight:500}
+.side a svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.side a.on{background:#173F42;color:#fff}
+.side a.on svg{stroke:#5EEAD4}
+.side a .n{margin-left:auto;font-size:11px;background:#1D4A4D;color:#A7F3E7;padding:1px 7px;border-radius:20px}
+.corp{margin-top:auto;border:1px solid #1C4447;border-radius:12px;padding:12px;font-size:11.5px;color:#8DAAA7}
+.corp b{color:#fff;font-size:12px;display:block;margin-bottom:8px}
+.corp .r{display:flex;align-items:center;gap:8px;padding:3px 0}
+.corp .r i{width:7px;height:7px;border-radius:50%;background:#4ADE80}
+.corp .r span{margin-left:auto;font-family:"IBM Plex Mono";color:#A7F3E7}
+
+/* main */
+main{display:flex;flex-direction:column;min-width:0;min-height:0;overflow:hidden}
+.top{height:62px;display:flex;align-items:center;gap:14px;padding:0 28px;border-bottom:1px solid var(--line);background:#fff}
+.crumb{font-size:13px;color:var(--ink3)}
+.crumb b{color:var(--ink);font-weight:600}
+.sp{flex:1}
+.pill{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:20px;display:inline-flex;align-items:center;gap:6px}
+.btn{font-size:13px;font-weight:600;padding:8px 14px;border-radius:8px;border:1px solid var(--line);background:#fff;display:inline-flex;gap:7px;align-items:center;color:var(--ink)}
+.btn.p{background:var(--violet);border-color:var(--violet);color:#fff}
+.av{width:34px;height:34px;border-radius:50%;background:#E2F3F1;color:var(--violet);display:grid;place-items:center;font-weight:700;font-size:12px}
+
+.body{flex:1;display:grid;grid-template-columns:1fr 432px;min-height:0}
+.doc{padding:20px 28px;display:flex;flex-direction:column;gap:14px;min-width:0;overflow:hidden}
+.dh{display:flex;align-items:flex-start;gap:16px}
+.dh h1{font-size:21px;font-weight:600;letter-spacing:-.015em}
+.dh p{font-size:12.5px;color:var(--ink3);margin-top:4px}
+
+/* pipeline strip */
+.pipe{display:flex;align-items:center;background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px 16px;gap:0}
+.st{display:flex;align-items:center;gap:9px;font-size:12px;color:var(--ink2);flex:1}
+.st .c{width:24px;height:24px;border-radius:50%;background:var(--ok-soft);display:grid;place-items:center;flex:none}
+.st b{display:block;color:var(--ink);font-size:12.5px;font-weight:600}
+.st small{white-space:nowrap;font-family:"IBM Plex Mono";font-size:10.5px;color:var(--ink3)}
+.arrow{width:16px;height:1px;background:var(--line);margin:0 10px;flex:none}
+
+/* text panel */
+.paper{background:#fff;border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-height:0}
+.ph{display:flex;align-items:center;gap:10px;padding:13px 18px;border-bottom:1px solid var(--line2)}
+.ph h3{font-size:13.5px;font-weight:600}
+.tabs{display:flex;gap:4px;margin-left:auto;background:var(--paper);padding:3px;border-radius:8px}
+.tabs span{font-size:11.5px;padding:4px 10px;border-radius:6px;color:var(--ink2);font-weight:500}
+.tabs span.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.06)}
+.text{padding:16px 24px 6px;font-family:"IBM Plex Serif",Georgia,serif;font-size:15px;line-height:1.72;color:#2A2940}
+.text p+p{margin-top:12px}
+.msg{display:flex;gap:12px;margin-bottom:8px}
+.msg .who{width:30px;height:30px;border-radius:50%;background:#FFE8D9;color:#B4531B;display:grid;place-items:center;font-family:"IBM Plex Sans";font-weight:700;font-size:12px;flex:none;margin-top:4px}
+.msg .meta{font-family:"IBM Plex Sans";font-size:11.5px;color:var(--ink3);margin-bottom:2px}
+mark{-webkit-box-decoration-break:clone;box-decoration-break:clone;background:none;padding:1px 2px;border-radius:3px;position:relative}
+mark.h{background:var(--hi-mark);box-shadow:inset 0 -2px 0 var(--hi)}
+mark.m{background:var(--md-mark);box-shadow:inset 0 -2px 0 var(--md)}
+mark.l{background:var(--lo-mark);box-shadow:inset 0 -2px 0 var(--lo)}
+mark sup{font-family:"IBM Plex Mono";font-size:9.5px;font-weight:600;color:#fff;border-radius:4px;padding:0 4px;margin-left:3px;vertical-align:2px}
+mark.h sup{background:var(--hi)} mark.m sup{background:var(--md)} mark.l sup{background:var(--lo)}
+mark.sel{outline:2px solid var(--hi);outline-offset:2px}
+.foot{border-top:1px solid var(--line2);padding:11px 18px;display:flex;gap:18px;font-size:11.5px;color:var(--ink3);align-items:center}
+.foot i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+
+/* right: report */
+.rep{border-left:1px solid var(--line);background:#fff;display:flex;flex-direction:column;min-height:0}
+.score{padding:20px 22px;border-bottom:1px solid var(--line2);display:flex;gap:18px;align-items:center}
+.gauge{position:relative;width:118px;height:118px;flex:none}
+.gauge .v{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.gauge .v b{font-size:34px;font-weight:700;letter-spacing:-.03em;display:block;line-height:1}
+.gauge .v small{font-size:10.5px;color:var(--ink3);font-family:"IBM Plex Mono"}
+.sc h2{font-size:17px;font-weight:600}
+.sc p{font-size:12.5px;color:var(--ink2);margin-top:5px;line-height:1.5}
+.regs{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 22px;border-bottom:1px solid var(--line2)}
+.rg{border:1px solid var(--line);border-radius:10px;padding:9px 10px}
+.rg .t{font-size:11px;color:var(--ink3);font-weight:500}
+.rg .x{display:flex;align-items:baseline;gap:6px;margin-top:2px}
+.rg .x b{font-size:19px;font-weight:700}
+.rg .x span{font-size:11px;color:var(--ink3)}
+.rg .bar{height:4px;border-radius:3px;background:var(--line2);margin-top:7px;overflow:hidden}
+.rg .bar i{display:block;height:100%}
+
+.list{padding:12px 22px 14px;display:flex;flex-direction:column;gap:10px;overflow:hidden}
+.lh{display:flex;align-items:center;font-size:12px;color:var(--ink3);font-weight:500}
+.lh b{color:var(--ink);font-size:13.5px;font-weight:600;margin-right:6px}
+.inf{border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.inf.open{border-color:#F0B9B3;box-shadow:0 6px 20px rgba(214,69,61,.08)}
+.it{display:flex;align-items:center;gap:8px}
+.num{font-family:"IBM Plex Mono";font-size:10.5px;font-weight:600;color:#fff;border-radius:5px;padding:1px 6px}
+.it b{font-size:13px;font-weight:600}
+.sev{margin-left:auto;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:20px}
+.art{font-family:"IBM Plex Mono";font-size:11px;color:var(--violet);margin-top:6px}
+.plain{font-size:12.5px;color:var(--ink2);line-height:1.5;margin-top:6px}
+.src{margin-top:9px;background:var(--paper);border-radius:8px;padding:9px 11px;font-family:"IBM Plex Serif";font-size:12px;line-height:1.5;color:#4B4A63;border-left:3px solid var(--violet2)}
+.src .m{display:flex;gap:10px;font-family:"IBM Plex Mono";font-size:10px;color:var(--ink3);margin-bottom:4px}
+.src .m em{font-style:normal;color:var(--violet);margin-left:auto}
+.fix{margin-top:9px;display:flex;gap:8px;align-items:flex-start;background:var(--ok-soft);border-radius:8px;padding:8px 10px;font-size:12px;color:#17694A;line-height:1.45}
+.fix b{font-weight:600}
+.trace{background:#fff;border:1px solid var(--line);border-radius:14px;flex:1;min-height:0;overflow:hidden}
+.trace table{width:100%;border-collapse:collapse;font-size:12px}
+.trace th{text-align:left;font-weight:500;color:var(--ink3);font-size:11px;padding:8px 18px;border-bottom:1px solid var(--line2);background:#FBFAF7}
+.trace td{padding:8px 18px;border-bottom:1px solid var(--line2);color:var(--ink2);vertical-align:middle}
+.trace tr:last-child td{border-bottom:0}
+.trace .q{font-family:"IBM Plex Serif";color:var(--ink);max-width:290px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.trace .ref{font-family:"IBM Plex Mono";font-size:11px;color:var(--violet)}
+.sim{display:flex;align-items:center;gap:8px;font-family:"IBM Plex Mono";font-size:11px}
+.sim i{display:block;width:70px;height:5px;border-radius:3px;background:var(--line2);overflow:hidden}
+.sim i b{display:block;height:100%;background:var(--violet2)}
+</style>
+<style>
+.modes{display:flex;gap:6px}
+.modes span{font-size:12.5px;font-weight:600;padding:7px 12px;border-radius:8px;border:1px solid var(--line);color:var(--ink2);display:flex;gap:7px;align-items:center}
+.modes span.on{background:var(--violet);border-color:var(--violet);color:#fff}
+.excl{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:600;color:#8C8BA3;border:1px dashed #C9C7BE;border-radius:20px;padding:1px 8px;margin-left:6px}
+.trace .q{max-width:250px}
+.pane-h{display:flex;align-items:center;justify-content:space-between}
+.small{font-size:11.5px;color:var(--ink3)}
+.code{font-family:"IBM Plex Mono";font-size:11px;background:#0D2B2E;color:#A7F3E7;border-radius:6px;padding:2px 6px}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand">
+      <div class="logo"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div><b>Pangea Comply</b><small>Module PangeaGTM</small></div>
+    </div>
+    <a><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Recherche de règles</a>
+    <a class="on"><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg>Analyse IA</a>
+    <a><svg viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/></svg>Historique<span class="n">37</span></a>
+    <div class="nl">Règles actives</div>
+    <a><svg viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></svg>RGPD</a>
+    <a><svg viewBox="0 0 24 24"><path d="m5 12 4 4 10-10"/></svg>AI Act</a>
+    <a style="opacity:.55"><svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></svg>CCPA <span class="n">exclue</span></a>
+    <div class="corp">
+      <b>Pipeline RAG</b>
+      <div class="r"><i></i>Embeddings<span>BGE-M3</span></div>
+      <div class="r"><i></i>Base vectorielle<span>ChromaDB</span></div>
+      <div class="r"><i></i>LLM<span>DeepSeek-R1</span></div>
+      <div class="r"><i></i>Interface<span>Django</span></div>
+      <div class="r" style="margin-top:6px;border-top:1px solid #1C4447;padding-top:8px">Découpage<span>par alinéa</span></div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="top">
+      <div class="crumb">Analyse IA / <b>Livre blanc B2B — génération PangeaGTM</b></div>
+      <span class="pill" style="background:var(--hi-soft);color:var(--hi)">● Non conforme</span>
+      <div class="sp"></div>
+      <div class="modes"><span>1 · Recherche de règles</span><span class="on">2 · Analyse IA</span></div>
+      <div class="av">SA</div>
+    </div>
+
+    <div class="body">
+      <section class="doc">
+        <div class="dh"><div>
+          <h1>Contrôle de conformité d’un contenu généré</h1>
+          <p>Extrait de livre blanc · 1 paragraphe · FR · appel au LLM via le routeur Hugging Face · 6 règles récupérées</p>
+        </div></div>
+
+        <div class="pipe">
+          <div class="st"><div class="c"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F9466" stroke-width="3" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg></div><div><b>Embedding</b><small>BGE-M3</small></div></div>
+          <div class="arrow"></div>
+          <div class="st"><div class="c"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F9466" stroke-width="3" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg></div><div><b>Règles</b><small>ChromaDB · top-k</small></div></div>
+          <div class="arrow"></div>
+          <div class="st"><div class="c"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F9466" stroke-width="3" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg></div><div><b>check_rules_compliance</b><small>DeepSeek-R1</small></div></div>
+          <div class="arrow"></div>
+          <div class="st"><div class="c"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1F9466" stroke-width="3" stroke-linecap="round"><path d="m5 12 4 4 10-10"/></svg></div><div><b>parse_blocks</b><small>5 infractions</small></div></div>
+        </div>
+
+        <div class="paper">
+          <div class="ph"><h3>Texte à analyser</h3><span class="small">· zone éditable</span>
+            <div class="tabs"><span class="on">Surlignage</span><span>Original</span></div>
+          </div>
+          <div class="text">
+            <p>La solution s’appuie sur l’agrégation automatique de données issues de CRM internes, de plateformes sociales et de bases de données externes enrichies, <mark class="m">incluant des informations personnelles identifiables telles que fonctions, historiques d’interaction, signaux comportementaux<sup>05</sup></mark> et contenus publics ou semi-publics. <mark class="h sel">Ces données sont croisées et conservées sans anonymisation<sup>01</sup></mark> <mark class="h">ni recueil systématique du consentement des personnes concernées<sup>02</sup></mark>, <mark class="m">afin d’alimenter de manière optimale des modèles de scoring prédictif propriétaires.<sup>04</sup></mark> <mark class="h">Les algorithmes déterminent de manière autonome la priorité des prospects, les messages à adresser et le moment optimal de contact, sans mécanisme d’explicabilité ou d’intervention humaine<sup>03</sup></mark>, ce qui permet une accélération significative des cycles de vente.</p>
+          </div>
+          <div class="foot">
+            <span><i style="background:var(--hi)"></i>Élevé · 3</span>
+            <span><i style="background:var(--md)"></i>Moyen · 2</span>
+            <span style="margin-left:auto" class="mono">Appel fait à DeepSeek-R1 · réponse structurée par parse_blocks()</span>
+          </div>
+        </div>
+
+        <div class="trace">
+          <div class="ph"><h3>Règles récupérées dans ChromaDB</h3><span class="small">· règle + métadonnées (texte, article, alinéa)</span><span class="mono" style="margin-left:auto;font-size:11px;color:var(--ink3)">collection persistante</span></div>
+          <table><thead><tr><th>Réglementation</th><th>Article / considérant</th><th>Sujet</th><th>Similarité</th></tr></thead><tbody>
+            <tr><td>RGPD</td><td class="ref">Considérant 26</td><td class="q">Anonymisation et données identifiables</td><td><div class="sim"><i><b style="width:88%"></b></i>0.88</div></td></tr>
+            <tr><td>RGPD</td><td class="ref">Considérant 71</td><td class="q">Profilage et décision automatisée</td><td><div class="sim"><i><b style="width:86%"></b></i>0.86</div></td></tr>
+            <tr><td>RGPD</td><td class="ref">Art. 6(1)</td><td class="q">Licéité du traitement, consentement</td><td><div class="sim"><i><b style="width:83%"></b></i>0.83</div></td></tr>
+            <tr><td>RGPD</td><td class="ref">Art. 35</td><td class="q">Analyse d’impact (AIPD / DPIA)</td><td><div class="sim"><i><b style="width:79%"></b></i>0.79</div></td></tr>
+            <tr><td>CCPA <span class="excl">exclue</span></td><td class="ref">§1798.100</td><td class="q">Information au moment de la collecte</td><td><div class="sim"><i><b style="width:76%"></b></i>0.76</div></td></tr>
+            <tr><td>AI Act</td><td class="ref">Art. 3</td><td class="q">Définitions — « système d’IA »</td><td><div class="sim"><i><b style="width:72%"></b></i>0.72</div></td></tr>
+          </tbody></table>
+        </div>
+      </section>
+
+      <aside class="rep">
+        <div class="score">
+          <div class="gauge">
+            <svg width="118" height="118" viewBox="0 0 118 118">
+              <circle cx="59" cy="59" r="50" fill="none" stroke="#F0EEE8" stroke-width="11"/>
+              <circle cx="59" cy="59" r="50" fill="none" stroke="url(#g)" stroke-width="11" stroke-linecap="round" stroke-dasharray="97.4 314.2" transform="rotate(-90 59 59)"/>
+              <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#E9A23B"/><stop offset="1" stop-color="#D6453D"/></linearGradient></defs>
+            </svg>
+            <div class="v"><div><b>31</b><small>/ 100</small></div></div>
+          </div>
+          <div class="sc">
+            <h2>Score de conformité faible</h2>
+            <p>Le texte décrit un <b>profilage sans consentement</b> sur des <b>données non anonymisées</b>, avec des décisions <b>sans intervention humaine</b>. À corriger avant diffusion.</p>
+          </div>
+        </div>
+        <div class="regs">
+          <div class="rg"><div class="t">RGPD</div><div class="x"><b>4</b><span>infractions</span></div><div class="bar"><i style="width:86%;background:var(--hi)"></i></div></div>
+          <div class="rg"><div class="t">AI Act</div><div class="x"><b>0</b><span>infraction</span></div><div class="bar"><i style="width:4%;background:var(--ok)"></i></div></div>
+          <div class="rg"><div class="t">CCPA · exclue</div><div class="x"><b>1</b><span>signalée</span></div><div class="bar"><i style="width:45%;background:var(--md)"></i></div></div>
+        </div>
+        <div class="list">
+          <div class="lh"><b>Commentaires</b>triés par gravité</div>
+          <div class="inf open">
+            <div class="it"><span class="num" style="background:var(--hi)">01</span><b>RGPD — Considérant 26</b><span class="sev" style="background:var(--hi-soft);color:var(--hi)">Niveau : élevé</span></div>
+            <div class="plain"><b>Pourquoi :</b> utilisation de données identifiables sans anonymisation, alors que leur croisement massif augmente les risques de ré-identification.</div>
+            <div class="src"><div class="m"><span>rgpd / considérant 26</span><em>similarité 0.88</em></div>« Il y a lieu d’appliquer les principes relatifs à la protection des données à toute information concernant une personne physique identifiée ou identifiable. »</div>
+            <div class="fix"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1F9466" stroke-width="2.2" stroke-linecap="round" style="flex:none;margin-top:1px"><path d="m5 12 4 4 10-10"/></svg><span><b>Piste :</b> pseudonymiser ou anonymiser avant le croisement des sources.</span></div>
+          </div>
+          <div class="inf">
+            <div class="it"><span class="num" style="background:var(--hi)">03</span><b>RGPD — Considérant 71</b><span class="sev" style="background:var(--hi-soft);color:var(--hi)">Élevé</span></div>
+            <div class="plain">Profilage et décisions automatisées sans explication ni intervention humaine possible.</div>
+          </div>
+          <div class="inf">
+            <div class="it"><span class="num" style="background:var(--hi)">02</span><b>RGPD — Art. 6(1)</b><span class="sev" style="background:var(--hi-soft);color:var(--hi)">Élevé</span></div>
+          </div>
+          <div class="inf">
+            <div class="it"><span class="num" style="background:var(--md)">05</span><b>CCPA §1798.100</b><span class="excl">exclue · signalée</span><span class="sev" style="background:var(--md-soft);color:var(--md)">Moyen</span></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+</div>
+</body>
+</html>

@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Égérine — Advertising Performance</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bar:#0F2A2A; --canvas:#EDEBE9; --card:#fff; --line:#E1DFDD; --line2:#F3F2F1;
+  --ink:#252423; --ink2:#605E5C; --ink3:#8A8886;
+  --plum:#1F6F5C; --plum-soft:#E3F3EE;
+  --search:#2E5EAA; --meta:#E07A5F; --tiktok:#2A9D8F; --display:#E0B13F; --email:#8E6C8A;
+  --pos:#107C10; --neg:#C50F1F;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Inter,system-ui,sans-serif;background:var(--canvas);color:var(--ink);-webkit-font-smoothing:antialiased}
+.app{width:1440px;height:1000px;display:flex;flex-direction:column;overflow:hidden}
+
+.bar{height:48px;background:var(--bar);color:#fff;display:flex;align-items:center;padding:0 16px;gap:14px;flex:none}
+.waffle{display:grid;grid-template-columns:repeat(3,4px);gap:3px}
+.waffle i{width:4px;height:4px;background:#fff;opacity:.85;border-radius:1px}
+.bar .ws{font-size:13px;color:#CFE3DC}
+.bar .ws b{color:#fff;font-weight:600}
+.bar .sp{flex:1}
+.bar .ref{font-size:12px;color:#A9C7BE;display:flex;align-items:center;gap:6px}
+.bar .ic{width:32px;height:32px;display:grid;place-items:center;border-radius:4px;color:#E1EEEA}
+.bar .av{width:30px;height:30px;border-radius:50%;background:#E07A5F;display:grid;place-items:center;font-size:12px;font-weight:700}
+
+.tool{height:40px;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 16px;gap:18px;font-size:12.5px;color:var(--ink2);flex:none}
+.tool span{display:flex;align-items:center;gap:6px}
+.tool .sp{flex:1}
+
+.mid{flex:1;display:flex;min-height:0}
+.canvas{flex:1;padding:16px 18px 10px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.filters{width:34px;background:#fff;border-left:1px solid var(--line);display:flex;flex-direction:column;align-items:center;padding-top:12px;gap:14px;color:var(--ink2)}
+.filters .vt{writing-mode:vertical-rl;font-size:12px;font-weight:600;letter-spacing:.02em}
+
+.head{display:flex;align-items:center;gap:14px}
+.mark{width:40px;height:40px;border-radius:10px;background:var(--plum);display:grid;place-items:center;color:#fff;font-weight:700;font-size:18px;font-family:Georgia,serif}
+.head h1{font-size:20px;font-weight:700;letter-spacing:-.01em}
+.head p{font-size:12px;color:var(--ink3);margin-top:1px}
+.slicers{margin-left:auto;display:flex;gap:10px}
+.sl{background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 10px;min-width:150px}
+.sl small{display:block;font-size:10.5px;color:var(--ink3)}
+.sl b{font-size:12.5px;font-weight:600;display:flex;justify-content:space-between;align-items:center}
+
+.card{background:var(--card);border-radius:8px;box-shadow:0 1px 2px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.03);padding:12px 14px;position:relative;min-width:0}
+.ct{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px}
+.ct small{font-weight:400;color:var(--ink3);font-size:11.5px}
+.ct .r{margin-left:auto;display:flex;gap:12px;font-size:11px;font-weight:400;color:var(--ink2)}
+.ct .r i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.kpi .l{font-size:12px;color:var(--ink2)}
+.kpi .v{font-size:28px;font-weight:700;letter-spacing:-.02em;margin-top:2px}
+.kpi .d{font-size:11.5px;color:var(--ink3);display:flex;gap:6px;align-items:center}
+.kpi .d b{font-weight:600}
+.kpi svg{position:absolute;right:14px;bottom:14px}
+.kpi.hero{background:var(--plum);color:#fff}
+.kpi.hero .l,.kpi.hero .d{color:#CDE8DF}
+.kpi.hero .d b{color:#9EF0A0}
+
+.r2{display:grid;grid-template-columns:1.55fr 1fr;gap:12px;flex:none;height:360px}
+.r3{display:grid;grid-template-columns:1.5fr .78fr .92fr;gap:12px;flex:1;min-height:0}
+
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+th{font-weight:600;text-align:left;color:var(--ink2);font-size:11px;padding:6px 6px;border-bottom:1px solid var(--line)}
+th.n,td.n{text-align:right}
+td{padding:6.5px 6px;border-bottom:1px solid var(--line2)}
+tr.tot td{font-weight:700;border-top:1px solid var(--ink3);border-bottom:0}
+.ch{display:inline-flex;align-items:center;gap:6px}
+.ch i{width:8px;height:8px;border-radius:50%}
+.db{position:relative}
+.db span{position:absolute;right:0;top:3px;bottom:3px;background:#D5EDE5;border-radius:2px;z-index:0}
+.db em{position:relative;z-index:1;font-style:normal}
+.roas{font-weight:600;padding:1px 6px;border-radius:3px}
+
+.ai{background:linear-gradient(160deg,#fff 0%,#F4FAF8 100%);border:1px solid #CFE7DF}
+.ai .tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;color:var(--plum);background:var(--plum-soft);padding:2px 7px;border-radius:4px}
+.mv{display:flex;align-items:center;gap:10px;margin:12px 0 10px}
+.mv .bx{flex:1;border:1px solid var(--line);border-radius:6px;padding:7px 9px;background:#fff}
+.mv .bx small{font-size:10.5px;color:var(--ink3);display:block}
+.mv .bx b{font-size:13px}
+.proj{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.proj div{background:#fff;border:1px solid var(--line);border-radius:6px;padding:7px 9px}
+.proj small{font-size:10.5px;color:var(--ink3);display:block}
+.proj b{font-size:17px;font-weight:700}
+.sig{margin-top:10px;display:flex;flex-direction:column;gap:7px}.sig div{display:flex;gap:8px;font-size:11.5px;color:var(--ink2);line-height:1.4;background:#fff;border:1px solid var(--line);border-radius:6px;padding:7px 9px}.sig i{width:6px;border-radius:3px;flex:none}.sig b{color:var(--ink)}
+.note{font-size:11px;color:var(--ink3);margin-top:9px;line-height:1.45}
+
+.pages{height:34px;background:#fff;border-top:1px solid var(--line);display:flex;align-items:stretch;padding:0 12px;font-size:12.5px;flex:none}
+.pages span{display:flex;align-items:center;padding:0 16px;color:var(--ink2);border-top:3px solid transparent}
+.pages span.on{color:var(--ink);font-weight:600;border-top-color:var(--plum);background:#FAF9F8}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="bar">
+    <div class="waffle"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    <div class="ws">Marketing analytics &nbsp;›&nbsp; <b>Égérine — Advertising Performance</b></div>
+    <div class="sp"></div>
+    <div class="ref"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a9 9 0 1 1-3-6.7L21 8M21 3v5h-5"/></svg>Données actualisées le 31/03/2025 à 23:00</div>
+    <div class="ic"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/></svg></div>
+    <div class="av">SA</div>
+  </div>
+  <div class="tool">
+    <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h6"/></svg>Fichier</span>
+    <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 3v12m0 0-5-5m5 5 5-5M5 21h14"/></svg>Exporter</span>
+    <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="m8.6 13.5 6.8 4M15.4 6.5l-6.8 4"/></svg>Partager</span>
+    <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Commentaires</span>
+    <div class="sp"></div>
+    <span>Signets</span><span>Affichage</span><span style="color:var(--plum);font-weight:600">Modifier</span>
+  </div>
+
+  <div class="mid">
+    <div class="canvas">
+      <div class="head">
+        <div class="mark">É</div>
+        <div><h1>Performance publicitaire — T1 2025</h1><p>Toutes plateformes · comparaison avec le T4 2024 · montants en euros HT</p></div>
+        <div class="slicers">
+          <div class="sl"><small>Période</small><b>01/01 – 31/03/2025 <span>▾</span></b></div>
+          <div class="sl"><small>Canal</small><b>Tous <span>▾</span></b></div>
+          <div class="sl"><small>Campagne</small><b>Toutes <span>▾</span></b></div>
+        </div>
+      </div>
+
+      <div class="kpis" id="kpis"></div>
+
+      <div class="r2">
+        <div class="card"><div class="ct">Dépenses vs chiffre d’affaires par semaine<small>· ROAS hebdomadaire</small>
+          <div class="r"><span><i style="background:#A9D5C8"></i>Dépenses</span><span><i style="background:var(--plum)"></i>Chiffre d’affaires</span><span><i style="background:var(--meta);height:3px;vertical-align:2px"></i>ROAS</span></div></div>
+          <svg id="combo" width="100%" height="310" viewBox="0 0 780 310"></svg>
+        </div>
+        <div class="card"><div class="ct">ROAS par canal<small>· objectif 3,0×</small></div>
+          <svg id="roasbar" width="100%" height="310" viewBox="0 0 480 310"></svg>
+        </div>
+      </div>
+
+      <div class="r3">
+        <div class="card"><div class="ct">Top campagnes<small>· trié par chiffre d’affaires</small></div>
+          <table id="camp"></table>
+        </div>
+        <div class="card"><div class="ct">Répartition du budget</div>
+          <svg id="donut" width="100%" height="250" viewBox="0 0 260 230"></svg>
+        </div>
+        <div class="card ai">
+          <div class="ct"><span class="tag">IA</span>Optimiseur de budget</div>
+          <div class="mv">
+            <div class="bx"><small>Réduire</small><b style="color:#9A7410">Display −6 000 €</b></div>
+            <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="#1F6F5C" stroke-width="2" stroke-linecap="round"><path d="M1 7h17M12 1l6 6-6 6"/></svg>
+            <div class="bx"><small>Réallouer à</small><b style="color:var(--search)">Search +6 000 €</b></div>
+          </div>
+          <div class="proj">
+            <div><small>CA projeté</small><b style="color:var(--pos)">+13,8 k€</b></div>
+            <div><small>ROAS global</small><b>3,80× → 3,88×</b></div>
+          </div>
+          <div class="sig"><div><i style="background:var(--tiktok)"></i><span><b>TikTok</b> — CTR des contenus UGC +0,6 pt sur 4 semaines : tester +15 % de budget.</span></div><div><i style="background:var(--meta)"></i><span><b>Meta</b> — fatigue créative sur le carrousel (fréquence 4,8) : renouveler les visuels.</span></div></div><p class="note">Modèle de rendements décroissants par canal (régression log sur 13 semaines). ROAS marginal estimé : Search 4,1× · Display 1,8×.</p>
+        </div>
+      </div>
+    </div>
+    <div class="filters">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg>
+      <div class="vt">Filtres</div>
+    </div>
+  </div>
+
+  <div class="pages">
+    <span class="on">Vue d’ensemble</span><span>Canaux</span><span>Campagnes</span><span>Créations</span><span>Prévisions</span><span style="color:var(--ink3)">+</span>
+  </div>
+</div>
+
+<script>
+const fmt=(n,d=0)=>n.toLocaleString('fr-FR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const C={search:'#2E5EAA',meta:'#E07A5F',tiktok:'#2A9D8F',display:'#E0B13F',email:'#8E6C8A'};
+const CH=[
+ {k:'search',n:'Google Search',s:52400,r:251500,c:3420},
+ {k:'meta',n:'Meta Ads',s:61200,r:220300,c:3060},
+ {k:'email',n:'E-mail / CRM',s:17500,r:93700,c:1230},
+ {k:'tiktok',n:'TikTok Ads',s:28900,r:92500,c:1390},
+ {k:'display',n:'Google Display',s:24600,r:44300,c:760},
+];
+const S=CH.reduce((a,c)=>a+c.s,0), R=CH.reduce((a,c)=>a+c.r,0), CV=CH.reduce((a,c)=>a+c.c,0);
+
+// weekly series (13 weeks), scaled to totals
+const ws=[.062,.081,.094,.088,.071,.093,.085,.064,.066,.072,.074,.077,.073];
+const wr=[.058,.084,.101,.092,.068,.097,.091,.062,.063,.071,.072,.072,.069];
+const sumw=a=>a.reduce((x,y)=>x+y,0);
+const WS=ws.map(x=>x/sumw(ws)*S), WR=wr.map(x=>x/sumw(wr)*R);
+const weeks=['06/01','13/01','20/01','27/01','03/02','10/02','17/02','24/02','03/03','10/03','17/03','24/03','31/03'];
+
+function spark(vals,col){const w=86,h=26,mx=Math.max(...vals),mn=Math.min(...vals);
+ const pts=vals.map((v,i)=>`${(i/(vals.length-1)*w).toFixed(1)},${(h-2-(v-mn)/(mx-mn)*(h-4)).toFixed(1)}`).join(' ');
+ return `<svg width="${w}" height="${h}"><polyline points="${pts}" fill="none" stroke="${col}" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/></svg>`;}
+const roasW=WR.map((r,i)=>r/WS[i]);
+const K=[
+ {l:'Dépenses publicitaires',v:fmt(S/1000,1)+' k€',d:'<b style="color:var(--ink2)">+6,2 %</b> vs T4',sp:WS,c:'#7FB8A8'},
+ {l:'Chiffre d’affaires attribué',v:fmt(R/1000,1)+' k€',d:'<b>▲ +11,4 %</b> vs T4',sp:WR,c:'#9EF0A0',hero:1},
+ {l:'ROAS',v:fmt(R/S,2)+'×',d:'<b style="color:var(--pos)">▲ +0,18</b> vs T4 (3,62×)',sp:roasW,c:'#1F6F5C'},
+ {l:'Conversions',v:fmt(CV),d:'<b style="color:var(--pos)">▲ +9,1 %</b> vs T4',sp:WR,c:'#1F6F5C'},
+ {l:'Coût par acquisition',v:fmt(S/CV,2)+' €',d:'<b style="color:var(--pos)">▼ −2,7 %</b> vs T4 (19,23 €)',sp:WS.map((s,i)=>s/WR[i]),c:'#1F6F5C'},
+];
+document.getElementById('kpis').innerHTML=K.map(k=>`<div class="card kpi${k.hero?' hero':''}"><div class="l">${k.l}</div><div class="v">${k.v}</div><div class="d">${k.d}</div>${spark(k.sp,k.c)}</div>`).join('');
+
+// combo chart
+(function(){const W=780,H=310,L=50,Rr=40,T=30,B=26,pw=W-L-Rr,ph=H-T-B;
+ const ymax=100000, n=13, bw=pw/n;
+ let s='';
+ for(let i=0;i<=4;i++){const y=T+ph-ph*i/4;s+=`<line x1="${L}" x2="${W-Rr}" y1="${y}" y2="${y}" stroke="#F0EEEC"/><text x="${L-8}" y="${y+4}" font-size="10.5" fill="#8A8886" text-anchor="end">${i*25} k€</text>`;}
+ for(let i=0;i<=3;i++){const y=T+ph-ph*i/3;s+=`<text x="${W-Rr+8}" y="${y+4}" font-size="10.5" fill="#C9603F">${(2+i)}×</text>`;}
+ WS.forEach((v,i)=>{const h=v/ymax*ph;s+=`<rect x="${L+i*bw+bw*.2}" y="${T+ph-h}" width="${bw*.6}" height="${h}" fill="#A9D5C8" rx="2"/>`;});
+ const pr=WR.map((v,i)=>[L+i*bw+bw/2,T+ph-v/ymax*ph]);
+ s+=`<path d="M${pr.map(p=>p.join(',')).join(' L')} L${pr[12][0]},${T+ph} L${pr[0][0]},${T+ph}Z" fill="#1F6F5C" opacity=".07"/>`;
+ s+=`<polyline points="${pr.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#1F6F5C" stroke-width="2.6" stroke-linejoin="round"/>`;
+ pr.forEach(p=>s+=`<circle cx="${p[0]}" cy="${p[1]}" r="3" fill="#fff" stroke="#1F6F5C" stroke-width="2"/>`);
+ const ro=roasW.map((v,i)=>[L+i*bw+bw/2,T+ph-(v-2)/3*ph]);
+ s+=`<polyline points="${ro.map(p=>p.join(',')).join(' ')}" fill="none" stroke="#E07A5F" stroke-width="2" stroke-dasharray="5 3"/>`;
+ weeks.forEach((w,i)=>s+=`<text x="${L+i*bw+bw/2}" y="${H-8}" font-size="10.5" fill="#605E5C" text-anchor="middle">${w}</text>`);
+ // annotations
+ const a=pr[2]; s+=`<g><line x1="${a[0]}" x2="${a[0]}" y1="${a[1]-6}" y2="${a[1]-22}" stroke="#605E5C" stroke-width="1"/><rect x="${a[0]-46}" y="${a[1]-40}" width="92" height="18" rx="3" fill="#252423"/><text x="${a[0]}" y="${a[1]-27}" font-size="10.5" fill="#fff" text-anchor="middle">Soldes d’hiver</text></g>`;
+ const b=pr[5]; s+=`<g><line x1="${b[0]}" x2="${b[0]}" y1="${b[1]-6}" y2="${b[1]-22}" stroke="#605E5C" stroke-width="1"/><rect x="${b[0]-44}" y="${b[1]-40}" width="88" height="18" rx="3" fill="#252423"/><text x="${b[0]}" y="${b[1]-27}" font-size="10.5" fill="#fff" text-anchor="middle">Saint-Valentin</text></g>`;
+ document.getElementById('combo').innerHTML=s;})();
+
+// ROAS by channel
+(function(){const W=480,L=118,Rr=58,T=14,rowH=54,max=6;
+ const rows=[...CH].sort((a,b)=>b.r/b.s-a.r/a.s);let s='';
+ const x=v=>L+(W-L-Rr)*v/max;
+ rows.forEach((c,i)=>{const y=T+i*rowH, v=c.r/c.s;
+  s+=`<text x="${L-10}" y="${y+16}" font-size="12" fill="#252423" text-anchor="end">${c.n}</text>`;
+  s+=`<text x="${L-10}" y="${y+30}" font-size="10.5" fill="#8A8886" text-anchor="end">${fmt(c.s/1000,1)} k€ dépensés</text>`;
+  s+=`<rect x="${L}" y="${y+5}" width="${x(v)-L}" height="24" rx="3" fill="${C[c.k]}" ${v<3?'opacity=".9"':''}/>`;
+  s+=`<text x="${x(v)+7}" y="${y+22}" font-size="12.5" font-weight="700" fill="${v<3?'#C50F1F':'#252423'}">${fmt(v,2)}×</text>`;});
+ const tx=x(3); s+=`<line x1="${tx}" x2="${tx}" y1="2" y2="${T+rows.length*rowH}" stroke="#252423" stroke-dasharray="4 3"/><text x="${tx+4}" y="${T+rows.length*rowH+12}" font-size="10.5" fill="#605E5C">objectif 3,0×</text>`;
+ document.getElementById('roasbar').innerHTML=s;})();
+
+// campaigns table
+(function(){const rows=[
+ ['Soldes d’hiver — Search','search','Google Search',21400,109100],
+ ['Saint-Valentin — Reels','meta','Meta Ads',18900,79400],
+ ['Soldes d’hiver — Carrousel','meta','Meta Ads',16300,52200],
+ ['Printemps — UGC créateurs','tiktok','TikTok Ads',14800,50300],
+ ['Newsletter Saint-Valentin','email','E-mail / CRM',6200,39700],
+ ['Retargeting — Bannières','display','Google Display',11700,18700]];
+ const mx=Math.max(...rows.map(r=>r[4]));
+ const rc=v=>v>=4.5?'background:#DFF6DD;color:#107C10':v>=3?'background:#F3F2F1;color:#252423':'background:#FDE7E9;color:#C50F1F';
+ let h=`<thead><tr><th>Campagne</th><th>Canal</th><th class="n">Dépenses</th><th class="n" style="width:150px">Chiffre d’affaires</th><th class="n">ROAS</th></tr></thead><tbody>`;
+ rows.forEach(r=>{const v=r[4]/r[3];h+=`<tr><td>${r[0]}</td><td><span class="ch"><i style="background:${C[r[1]]}"></i>${r[2]}</span></td><td class="n">${fmt(r[3])} €</td><td class="n db"><span style="width:${r[4]/mx*100}%"></span><em>${fmt(r[4])} €</em></td><td class="n"><span class="roas" style="${rc(v)}">${fmt(v,2)}×</span></td></tr>`;});
+ const ts=rows.reduce((a,r)=>a+r[3],0), tr=rows.reduce((a,r)=>a+r[4],0);
+ h+=`<tr class="tot"><td>Total (6 campagnes)</td><td></td><td class="n">${fmt(ts)} €</td><td class="n">${fmt(tr)} €</td><td class="n">${fmt(tr/ts,2)}×</td></tr></tbody>`;
+ document.getElementById('camp').innerHTML=h;})();
+
+// donut
+(function(){const cx=80,cy=112,r=64,sw=24;let a=-Math.PI/2,s='';
+ const rows=[...CH].sort((x,y)=>y.s-x.s);
+ rows.forEach(c=>{const f=c.s/S,a2=a+f*2*Math.PI,large=f>.5?1:0;
+  const p=(t,rr)=>[cx+rr*Math.cos(t),cy+rr*Math.sin(t)];
+  const [x1,y1]=p(a+.012,r),[x2,y2]=p(a2-.012,r);
+  s+=`<path d="M${x1},${y1} A${r},${r} 0 ${large} 1 ${x2},${y2}" fill="none" stroke="${C[c.k]}" stroke-width="${sw}"/>`;a=a2;});
+ s+=`<text x="${cx}" y="${cy-2}" font-size="17" font-weight="700" text-anchor="middle" fill="#252423">${fmt(S/1000,1)} k€</text><text x="${cx}" y="${cy+14}" font-size="10.5" text-anchor="middle" fill="#8A8886">budget T1</text>`;
+ rows.forEach((c,i)=>{const y=50+i*32;s+=`<rect x="162" y="${y-9}" width="9" height="9" rx="2" fill="${C[c.k]}"/><text x="177" y="${y}" font-size="11.5" fill="#252423">${c.n.replace('Google ','')}</text><text x="177" y="${y+13}" font-size="10.5" fill="#8A8886">${fmt(c.s/S*100,1)} %</text>`;});
+ document.getElementById('donut').innerHTML=s;})();
+</script>
+</body>
+</html>

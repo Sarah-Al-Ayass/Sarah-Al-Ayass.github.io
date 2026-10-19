@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Marchands d’Art — Signal précoce</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#F4EFE6; --card:#FFFDF9; --line:#E4DCCD; --line2:#EFE9DE;
+  --ink:#1E1A17; --ink2:#5C534B; --ink3:#958A7E;
+  --ox:#6E1F2B; --ox2:#8E2A39; --ox-soft:#F5E6E4;
+  --gold:#B08A3E; --gold-soft:#F4ECD9;
+  --side:#24171A; --sage:#5E7A5B; --sage-soft:#E6EEE3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"DM Sans",system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-font-smoothing:antialiased}
+.serif{font-family:"Cormorant Garamond",Georgia,serif}
+.mono{font-family:"DM Mono",ui-monospace,monospace}
+.app{width:1440px;height:1000px;display:grid;grid-template-columns:236px 1fr;overflow:hidden}
+.side{background:var(--side);color:#C9B9B3;padding:24px 16px;display:flex;flex-direction:column;gap:3px}
+.brand{padding:0 8px 26px}
+.brand b{font-family:"Cormorant Garamond";font-size:27px;color:#F4EFE6;letter-spacing:.06em;font-weight:600;line-height:1;display:block}
+.brand small{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.nl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#7D6A66;padding:16px 10px 6px}
+.side a{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:8px;font-size:13.5px}
+.side a i{width:6px;height:6px;border-radius:50%;background:#5B4747}
+.side a.on{background:#3A2529;color:#fff}
+.side a.on i{background:var(--gold)}
+.side a span{margin-left:auto;font-size:10.5px;color:#9C8984;font-family:"DM Mono"}
+.src{margin-top:auto;border:1px solid #3A2A2D;border-radius:12px;padding:12px;font-size:11.5px;color:#A8958F;line-height:1.55}
+.src b{color:#F4EFE6;font-weight:600;display:block;margin-bottom:4px}
+.src em{font-style:italic;font-family:"Cormorant Garamond";font-size:14px;color:#E7D9C0}
+
+main{padding:22px 26px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.head{display:flex;align-items:flex-end;gap:16px}
+.head h1{font-family:"Cormorant Garamond";font-size:38px;font-weight:600;line-height:1;letter-spacing:-.01em}
+.head h1 em{font-style:italic;color:var(--ox)}
+.head p{font-size:13px;color:var(--ink3);margin-top:6px}
+.sp{flex:1}
+.pill{font-size:12px;border:1px solid var(--line);background:var(--card);border-radius:20px;padding:6px 12px;color:var(--ink2)}
+.pill b{color:var(--ink)}
+
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;min-width:0}
+.kpi .l{font-size:11.5px;color:var(--ink3);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
+.kpi .v{font-variant-numeric:lining-nums;font-family:"Cormorant Garamond";font-size:40px;font-weight:600;line-height:1.05;margin-top:4px}
+.kpi .d{font-size:12px;color:var(--ink2)}
+.kpi .d b{color:var(--sage)}
+.kpi.dark{background:var(--ox);border-color:var(--ox);color:#fff}
+.kpi.dark .l{color:#E5C9C5}.kpi.dark .d{color:#F0DCD8}.kpi.dark .d b{color:#F4D58D}
+
+.r2{display:grid;grid-template-columns:1.6fr 1fr;gap:12px}
+.r3{display:grid;grid-template-columns:1.42fr .8fr .84fr;gap:12px;flex:1;min-height:0}
+.ct{display:flex;align-items:center;gap:8px}
+.ct h3{font-family:"Cormorant Garamond";font-size:21px;font-weight:600}
+.ct small{font-size:12px;color:var(--ink3)}
+.ct .r{margin-left:auto;display:flex;gap:12px;font-size:11.5px;color:var(--ink2)}
+.ct .r i{display:inline-block;width:10px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+.ent{display:flex;gap:6px;margin-left:auto}
+.ent span{font-size:11.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line);color:var(--ink2)}
+.ent span.on{background:var(--ink);color:#F4EFE6;border-color:var(--ink)}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+th{white-space:nowrap;text-align:left;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600;padding:6px 6px;border-bottom:1px solid var(--line)}
+td{white-space:nowrap;padding:9px 6px;border-bottom:1px solid var(--line2)}
+th.n,td.n{text-align:right}
+td.n{font-family:"DM Mono";font-size:12px}
+.sig{font-size:10.5px;font-weight:700;letter-spacing:.06em;padding:2px 8px;border-radius:20px}
+.hype{background:var(--ox-soft);color:var(--ox)}
+.stab{background:#EFEAE1;color:var(--ink2)}
+.up{background:var(--sage-soft);color:var(--sage)}
+.sent{display:inline-block;width:46px;height:5px;border-radius:3px;background:var(--line2);vertical-align:middle;overflow:hidden;margin-right:6px}
+.sent b{display:block;height:100%;background:var(--sage)}
+
+.mrow{display:grid;grid-template-columns:1.1fr .9fr .9fr;gap:6px;font-size:12.5px;padding:7px 0;border-bottom:1px solid var(--line2);align-items:center}
+.mrow.h{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600}
+.mrow.best{background:var(--gold-soft);margin:0 -8px;padding:7px 8px;border-radius:8px;border-bottom:0}
+.hp{display:flex;flex-wrap:wrap;gap:5px;margin-top:10px}
+.hp span{font-family:"DM Mono";font-size:10.5px;border:1px solid var(--line);border-radius:5px;padding:2px 6px;color:var(--ink2);background:#FBF8F2}
+.hp span b{color:var(--ox);font-weight:500}
+
+.search{display:flex;align-items:center;gap:8px;border:1.5px solid var(--ink);border-radius:10px;padding:8px 11px;margin-top:10px;font-size:14px}
+.search .cur{width:1.5px;height:16px;background:var(--ox);margin-left:-6px}
+.res{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.res div{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:9px;padding:8px 10px;font-size:13px;background:#FBF8F2}
+.res div.top{border-color:var(--gold);background:var(--gold-soft)}
+.res small{font-size:10.5px;color:var(--ink3);font-family:"DM Mono"}
+.res b{margin-left:auto;font-family:"DM Mono";font-size:12px;font-weight:500}
+.meth{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.meth span{font-size:11px;background:var(--side);color:#E7D9C0;border-radius:5px;padding:3px 8px}
+
+.split{display:flex;height:12px;border-radius:6px;overflow:hidden;margin:10px 0 8px}
+.lgd{display:flex;justify-content:space-between;font-size:12px;color:var(--ink2)}
+.lgd b{font-family:"DM Mono";font-weight:500;color:var(--ink)}
+.quote{margin-top:12px;border-left:2px solid var(--ox);padding:4px 0 4px 12px}
+.quote .big{font-variant-numeric:lining-nums;font-family:"Cormorant Garamond";font-size:34px;font-weight:700;color:var(--ox);line-height:1}
+.quote p{font-size:12px;color:var(--ink2);line-height:1.45;margin-top:3px}
+.bars{margin-top:10px;display:flex;flex-direction:column;gap:6px}
+.bars div{display:grid;grid-template-columns:96px 1fr 40px;gap:8px;align-items:center;font-size:12px;color:var(--ink2)}
+.bars i{height:7px;border-radius:4px;background:var(--line2);overflow:hidden;display:block}
+.bars i b{display:block;height:100%}
+.bars em{font-style:normal;font-family:"DM Mono";font-size:11.5px;color:var(--ink);text-align:right}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><b>MARCHANDS<br>D’ART</b><small>Signal précoce · IA</small></div>
+    <a><i></i>Vue du marché</a>
+    <a><i></i>Prédiction de prix<span>XGBoost</span></a>
+    <a class="on"><i></i>Veille médiatique<span>RSS</span></a>
+    <a><i></i>Recherche artiste<span>fuzzy</span></a>
+    <div class="nl">Intelligence de marché</div>
+    <a><i></i>Signaux faibles<span>AE</span></a>
+    <a><i></i>Tendances<span>LSTM</span></a>
+    <a><i></i>Segments<span>k-means</span></a>
+    <div class="nl">Export</div>
+    <a><i></i>Variables pour le ML<span>CSV</span></a>
+    <div class="src"><b>Données de référence</b><em>Lee et al., Nature, 2024</em><br>34 200 ventes aux enchères · 17 ans · 23 pays · ~41 variables sociales</div>
+  </aside>
+
+  <main>
+    <div class="head">
+      <div><h1>Système de signalisation <em>précoce</em></h1><p>Prix d’enchères, signaux sociaux et attention médiatique sur le marché de l’art contemporain</p></div>
+      <div class="sp"></div>
+      <div class="pill">Pipeline <b>Python · pandas · scikit-learn · XGBoost</b></div>
+      <div class="pill">Stockage <b>SQLite</b></div>
+    </div>
+
+    <div class="kpis">
+      <div class="card kpi dark"><div class="l">R² du modèle optimisé</div><div class="v">0,8885</div><div class="d"><b>▲ vs 0,71</b> dans l’étude de référence</div></div>
+      <div class="card kpi"><div class="l">RMSE (test)</div><div class="v">380 $</div><div class="d"><b>▼ −4,75 %</b> vs baseline (399 $)</div></div>
+      <div class="card kpi"><div class="l">Ventes modélisées</div><div class="v">34 200</div><div class="d">29 853 établis · 4 347 émergents</div></div>
+      <div class="card kpi"><div class="l">Articles analysés</div><div class="v">684</div><div class="d">Google Actualités + sources spécialisées</div></div>
+      <div class="card kpi"><div class="l">Pics d’attention</div><div class="v">3</div><div class="d">hype signals sur 30 jours</div></div>
+    </div>
+
+    <div class="r2">
+      <div class="card"><div class="ct"><h3>Attention médiatique</h3><small>· score agrégé par jour</small>
+        <div class="ent"><span class="on">Art Basel</span><span>Frieze</span><span>Christie’s</span><span>Sotheby’s</span></div></div>
+        <svg id="att" width="100%" height="270" viewBox="0 0 760 270"></svg>
+      </div>
+      <div class="card"><div class="ct"><h3>Recréation du modèle</h3><small>· XGBoost, split 80/20</small></div>
+        <div class="mrow h" style="margin-top:6px"><span>Modèle</span><span>R²</span><span>RMSE</span></div>
+        <div class="mrow"><span>Étude Nature (social)</span><span class="mono">≈ 0,71</span><span class="mono">—</span></div>
+        <div class="mrow"><span>XGBoost baseline</span><span class="mono">0,8837</span><span class="mono">399,19 $</span></div>
+        <div class="mrow best"><span><b>XGBoost optimisé</b></span><span class="mono"><b>0,8885</b></span><span class="mono"><b>380,21 $</b></span></div>
+        <div style="font-size:12px;color:var(--ink2);margin-top:12px">RandomizedSearchCV en 2 phases : <b>30 combinaisons (cv=3)</b> puis <b>25 (cv=5)</b></div>
+        <div class="hp"><span>max_depth <b>5→9</b></span><span>learning_rate <b>0.1→0.25</b></span><span>subsample <b>0.9</b></span><span>colsample_bytree <b>0.8</b></span><span>min_child_weight <b>2</b></span><span>reg_alpha <b>0.1</b></span><span>reg_lambda <b>1</b></span></div>
+      </div>
+    </div>
+
+    <div class="r3">
+      <div class="card"><div class="ct"><h3>Derniers signaux par entité</h3><small>· 7 derniers jours</small></div>
+        <table>
+          <thead><tr><th>Entité</th><th class="n">Articles</th><th class="n">Score moyen</th><th>Sentiment</th><th>Signal</th></tr></thead>
+          <tbody>
+            <tr><td><b>Art Basel</b></td><td class="n">41</td><td class="n">0,78</td><td><span class="sent"><b style="width:74%"></b></span>positif</td><td><span class="sig hype">HYPE</span></td></tr>
+            <tr><td>Frieze London</td><td class="n">23</td><td class="n">0,66</td><td><span class="sent"><b style="width:62%"></b></span>positif</td><td><span class="sig up">EN HAUSSE</span></td></tr>
+            <tr><td>Christie’s</td><td class="n">19</td><td class="n">0,61</td><td><span class="sent"><b style="width:51%"></b></span>neutre</td><td><span class="sig stab">STABLE</span></td></tr>
+            <tr><td>Sotheby’s</td><td class="n">17</td><td class="n">0,58</td><td><span class="sent"><b style="width:47%"></b></span>neutre</td><td><span class="sig stab">STABLE</span></td></tr>
+            <tr><td>Centre Pompidou</td><td class="n">12</td><td class="n">0,54</td><td><span class="sent"><b style="width:66%"></b></span>positif</td><td><span class="sig up">EN HAUSSE</span></td></tr>
+          </tbody>
+        </table>
+        <div style="font-size:11.5px;color:var(--ink3);margin-top:10px">Score = pertinence × fiabilité de la source × récence × sentiment</div>
+      </div>
+
+      <div class="card"><div class="ct"><h3>SmartSearch</h3><small>· noms d’artistes</small></div>
+        <div class="search"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1E1A17" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>Baskiat<span class="cur"></span></div>
+        <div class="res">
+          <div class="top">Jean-Michel Basquiat<small>alias</small><b>0,96</b></div>
+          <div>Jean-Michel Othoniel<small>n-grammes</small><b>0,41</b></div>
+          <div>Barkley L. Hendricks<small>levenshtein</small><b>0,37</b></div>
+        </div>
+        <p style="font-size:12px;color:var(--ink2);margin-top:12px;line-height:1.5">Reconnaît un artiste malgré les fautes de frappe et variantes d’écriture, pour fiabiliser les données avant l’entraînement.</p>
+        <div class="meth"><span>normalisation Unicode</span><span>batch_match()</span><span>mode CLI</span></div>
+      </div>
+
+      <div class="card"><div class="ct"><h3>Ce qui fait le prix</h3></div>
+        <div class="quote"><div class="big">73 %</div><p>de la variation des prix expliquée par les <b>signaux sociaux</b>, contre <b>5,5 %</b> pour les caractéristiques visuelles (Lee et al., 2024).</p></div>
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-top:14px">Répartition des ventes</div>
+        <div class="split"><i style="width:87.3%;background:var(--ink)"></i><i style="width:12.7%;background:var(--gold)"></i></div>
+        <div class="lgd"><span>Marchés établis <b>87,3 %</b></span><span>Émergents <b>12,7 %</b></span></div>
+        <div style="font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);font-weight:600;margin-top:16px">Au-delà du prix</div>
+        <div class="res" style="margin-top:8px">
+          <div>Autoencoder<small>signaux faibles</small></div>
+          <div>LSTM<small>tendances à 3 mois</small></div>
+          <div>K-means · DBSCAN<small>5 à 10 segments</small></div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<script>
+(function(){
+const n=30,base=[52,54,51,55,57,56,58,61,60,59,63,66,64,62,61,63,88,97,79,70,66,65,68,71,93,84,74,72,76,78];
+const W=760,H=270,L=36,R=12,T=16,B=28,pw=W-L-R,ph=H-T-B,mx=125;
+const x=i=>L+i*pw/(n-1),y=v=>T+ph-v/mx*ph;let s='';
+for(let i=0;i<=4;i++){const yy=T+ph-ph*i/4;s+=`<line x1="${L}" x2="${W-R}" y1="${yy}" y2="${yy}" stroke="#EFE9DE"/><text x="${L-8}" y="${yy+4}" font-size="10.5" fill="#958A7E" text-anchor="end" font-family="DM Mono">${i*30}</text>`;}
+// rolling mean
+const rm=base.map((v,i)=>{const a=base.slice(Math.max(0,i-6),i+1);return a.reduce((p,c)=>p+c,0)/a.length});
+const thr=rm.map(v=>v*1.25);
+s+=`<path d="M${thr.map((v,i)=>x(i)+','+y(v)).join(' L')}" fill="none" stroke="#B08A3E" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+s+=`<path d="M${base.map((v,i)=>x(i)+','+y(v)).join(' L')} L${x(n-1)},${T+ph} L${x(0)},${T+ph}Z" fill="#6E1F2B" opacity=".07"/>`;
+s+=`<polyline points="${base.map((v,i)=>x(i)+','+y(v)).join(' ')}" fill="none" stroke="#6E1F2B" stroke-width="2.4" stroke-linejoin="round"/>`;
+const hype=[17,24];
+base.forEach((v,i)=>{if(v>thr[i]){s+=`<circle cx="${x(i)}" cy="${y(v)}" r="6" fill="#6E1F2B" stroke="#FFFDF9" stroke-width="2.5"/>`}});
+[[17,'Ouverture de la foire'],[24,'Annonce d’un record']].forEach(([i,t])=>{const xx=x(i),yy=y(base[i]);s+=`<g><rect x="${xx-70}" y="${yy-36}" width="140" height="22" rx="11" fill="#1E1A17"/><text x="${xx}" y="${yy-21}" font-size="11" fill="#F4EFE6" text-anchor="middle">${t}</text></g>`});
+['1 juin','8 juin','15 juin','22 juin','29 juin'].forEach((t,k)=>{const i=Math.round(k*(n-1)/4);s+=`<text x="${x(i)}" y="${H-8}" font-size="10.5" fill="#958A7E" text-anchor="middle">${t}</text>`});
+s+=`<g font-size="11" fill="#5C534B" transform="translate(${L+260-W} 0)"><rect x="${W-250}" y="${T}" width="10" height="3" fill="#6E1F2B"/><text x="${W-236}" y="${T+5}">attention</text><rect x="${W-170}" y="${T}" width="10" height="2" fill="#B08A3E"/><text x="${W-156}" y="${T+5}">seuil de pic (+25 %)</text></g>`;
+document.getElementById('att').innerHTML=s;})();
+</script>
+</body>
+</html>
