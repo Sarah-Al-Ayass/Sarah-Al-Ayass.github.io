@@ -31,7 +31,7 @@ window.SITE = {
   /* ---------- 2. KEY FACTS (the 4 boxes under your name) ---------- */
   facts: [
     { big: { en: "RAG",  fr: "RAG" },  text: { en: "compliance engine checking AI-generated text against GDPR, the AI Act & CCPA", fr: "moteur de conformité vérifiant les textes générés par IA (RGPD, AI Act, CCPA)" } },
-    { big: { en: "Clients", fr: "Clients" }, text: { en: "real company projects with Pangea Summit, Marchands d’Art and Égérine", fr: "projets réels pour des entreprises : Pangea Summit, Marchands d’Art et Égérine" } },
+    { big: { en: "Full-stack", fr: "Full-stack" }, text: { en: "AI products built end to end, from data to interface", fr: "produits IA conçus de bout en bout, de la donnée à l’interface" } },
     { big: { en: "20+",  fr: "20+" },  text: { en: "IT staff trained in generative AI", fr: "collaborateurs IT formés à l’IA générative" } },
     { big: { en: "3",    fr: "3" },    text: { en: "languages: Arabic, French, English", fr: "langues : arabe, français, anglais" } },
   ],
