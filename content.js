@@ -31,7 +31,7 @@ window.SITE = {
   /* ---------- 2. KEY FACTS (the 4 boxes under your name) ---------- */
   facts: [
     { big: { en: "RAG",  fr: "RAG" },  text: { en: "compliance engine checking AI-generated text against GDPR, the AI Act & CCPA", fr: "moteur de conformité vérifiant les textes générés par IA (RGPD, AI Act, CCPA)" } },
-    { big: { en: "34K",  fr: "34K" },  text: { en: "auction sales analysed to predict art prices, beating a published Nature study’s model", fr: "ventes aux enchères analysées pour prédire le prix des œuvres, avec un modèle plus précis que celui d’une étude publiée dans Nature" } },
+    { big: { en: "Clients", fr: "Clients" }, text: { en: "real company projects with Pangea Summit, Marchands d’Art and Égérine", fr: "projets réels pour des entreprises : Pangea Summit, Marchands d’Art et Égérine" } },
     { big: { en: "20+",  fr: "20+" },  text: { en: "IT staff trained in generative AI", fr: "collaborateurs IT formés à l’IA générative" } },
     { big: { en: "3",    fr: "3" },    text: { en: "languages: Arabic, French, English", fr: "langues : arabe, français, anglais" } },
   ],
