@@ -32,7 +32,7 @@ window.SITE = {
   facts: [
     { big: { en: "RAG",  fr: "RAG" },  text: { en: "compliance engine checking AI-generated text against GDPR, the AI Act & CCPA", fr: "moteur de conformité vérifiant les textes générés par IA (RGPD, AI Act, CCPA)" } },
     { big: { en: "Full-stack", fr: "Full-stack" }, text: { en: "AI products built end to end, from data to interface", fr: "produits IA conçus de bout en bout, de la donnée à l’interface" } },
-    { big: { en: "20+ trained", fr: "20+ formés" }, text: { en: "IT colleagues taught to use generative AI", fr: "collaborateurs IT initiés à l’IA générative" } },
+    { big: { en: "20+",  fr: "20+" },  text: { en: "colleagues I trained in generative AI at Touch", fr: "collaborateurs que j’ai formés à l’IA générative chez Touch" } },
     { big: { en: "3",    fr: "3" },    text: { en: "languages: Arabic, French, English", fr: "langues : arabe, français, anglais" } },
   ],
 
