@@ -31,7 +31,7 @@ window.SITE = {
   /* ---------- 2. KEY FACTS (the 4 boxes under your name) ---------- */
   facts: [
     { big: { en: "RAG",  fr: "RAG" },  text: { en: "compliance engine checking AI-generated text against GDPR, the AI Act & CCPA", fr: "moteur de conformité vérifiant les textes générés par IA (RGPD, AI Act, CCPA)" } },
-    { big: { en: "0.89", fr: "0,89" }, text: { en: "R² on art-price prediction with XGBoost, vs 0.71 in a Nature study", fr: "de R² en prédiction de prix d’œuvres (XGBoost), contre 0,71 dans une étude Nature" } },
+    { big: { en: "34K",  fr: "34K" },  text: { en: "auction sales analysed to predict art prices, beating a published Nature study’s model", fr: "ventes aux enchères analysées pour prédire le prix des œuvres, avec un modèle plus précis que celui d’une étude publiée dans Nature" } },
     { big: { en: "20+",  fr: "20+" },  text: { en: "IT staff trained in generative AI", fr: "collaborateurs IT formés à l’IA générative" } },
     { big: { en: "3",    fr: "3" },    text: { en: "languages: Arabic, French, English", fr: "langues : arabe, français, anglais" } },
   ],
