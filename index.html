@@ -96,6 +96,19 @@ section.dark{background:linear-gradient(160deg,var(--navy),var(--black));color:#
 .mlinks a{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;background:var(--navy);color:#fff}
 .mlinks a.alt{background:#fff;color:var(--navy);border:1px solid var(--line)}
 .mlinks a:hover{background:var(--gold);color:var(--black)}
+/* live demo affordances */
+.plead{color:#3A4456;font-size:16px;max-width:640px;margin:-6px 0 28px;display:flex;gap:10px;align-items:flex-start}
+.plead i{flex:none;width:9px;height:9px;border-radius:50%;background:#2FBF71;margin-top:8px;box-shadow:0 0 0 0 rgba(47,191,113,.5);animation:livep 1.8s infinite}
+@keyframes livep{0%{box-shadow:0 0 0 0 rgba(47,191,113,.5)}70%{box-shadow:0 0 0 8px rgba(47,191,113,0)}100%{box-shadow:0 0 0 0 rgba(47,191,113,0)}}
+.media .live{position:absolute;right:14px;bottom:14px;display:inline-flex;align-items:center;gap:7px;background:rgba(7,9,15,.82);color:#fff;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(4px)}
+.media .live i{width:7px;height:7px;border-radius:50%;background:#2FBF71;animation:livep 1.8s infinite}
+.media .live.anim i{background:var(--gold2);animation:none}
+.card:hover .media .live{background:var(--gold);color:var(--black);border-color:var(--gold)}
+.card:hover .media .live i{background:var(--black)}
+.mlinks a.demo{padding:13px 20px;font-size:15px;background:var(--gold);color:var(--black);box-shadow:0 8px 22px rgba(201,165,78,.35)}
+.mlinks a.demo:hover{background:var(--navy);color:#fff}
+.mlinks a.demo svg{width:16px;height:16px}
+.demonote{flex-basis:100%;font-size:13px;color:#5B6577;margin-top:-2px}
 .chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:auto;padding-top:8px}
 .chip{font-size:12px;border:1px solid #D9DEE7;background:#F1F4F9;padding:4px 10px;border-radius:999px;color:var(--navy);font-weight:500}
 
@@ -196,6 +209,7 @@ footer{padding:32px 0 40px;color:#8C96A8;font-size:13px;text-align:center;backgr
 <section id="projects"><div class="wrap">
   <div class="kicker" data-l="kProjects"></div>
   <h2 data-l="projects"></h2>
+  <p class="plead"><i></i><span data-l="projectsLead"></span></p>
   <div class="grid" id="pgrid"></div>
 </div></section>
 
@@ -297,7 +311,7 @@ function renderCards(l){
   S.projects.forEach(p=>{
     const d=p[l]||p.en, cover=(p.images||[])[0];
     const c=document.createElement('button'); c.className='card rv in'; c.type='button';
-    c.innerHTML=`<div class="media">${cover?`<img src="${esc(cover)}" alt="" loading="lazy">`:`<div class="ph">${icon(p.icon)}</div>`}${tx(p.label,l)?`<span class="tag">${esc(tx(p.label,l))}</span>`:''}</div>
+    c.innerHTML=`<div class="media">${cover?`<img src="${esc(cover)}" alt="" loading="lazy">`:`<div class="ph">${icon(p.icon)}</div>`}${tx(p.label,l)?`<span class="tag">${esc(tx(p.label,l))}</span>`:''}${(p.links||{}).screen?`<span class="live${p.demo==='animated'?' anim':''}"><i></i>${esc(p.demo==='animated'?L.badgeAnim:L.badge)}</span>`:''}</div>
       <div class="body"><h3>${esc(d.title)}</h3><div class="meta">${esc(d.date)}</div><p>${esc(d.summary)}</p>
       <div class="chips">${(p.tools||[]).map(x=>`<span class="chip">${esc(x)}</span>`).join('')}</div>
       <div class="more">${esc(L.more)} <span>→</span></div></div>`;
@@ -315,7 +329,7 @@ function openModal(p){
     ${(d.did||[]).length?`<h4>${esc(d.team?L.didTeam:L.didSolo)}</h4><ul>${d.did.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
     ${d.result?`<h4>${esc(L.result)}</h4><p>${esc(d.result)}</p>`:''}`;
   $('m-chips').innerHTML=(p.tools||[]).map(x=>`<span class="chip">${esc(x)}</span>`).join('');
-  $('m-links').innerHTML=(k.screen?`<a href="${esc(k.screen)}" target="_blank" rel="noopener">${esc(L.screen)} ↗</a>`:'')+(k.report?`<a class="alt" href="${esc(k.report)}" target="_blank" rel="noopener">${esc(L.report)}</a>`:'')+(k.code?`<a class="alt" href="${esc(k.code)}" target="_blank" rel="noopener">${esc(L.code)}</a>`:'');
+  $('m-links').innerHTML=(k.screen?`<a class="demo" href="${esc(k.screen)}${k.screen.indexOf('?')<0?'?lang='+l:''}" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>${esc(p.demo==='animated'?L.screenAnim:L.screen)} ↗</a><span class="demonote">${esc(p.demo==='animated'?L.demoNoteAnim:L.demoNote)}</span>`:'')+(k.report?`<a class="alt" href="${esc(k.report)}" target="_blank" rel="noopener">${esc(L.report)}</a>`:'')+(k.code?`<a class="alt" href="${esc(k.code)}" target="_blank" rel="noopener">${esc(L.code)}</a>`:'');
   $('m-links').style.display=(k.screen||k.report||k.code)?'':'none';
   const gal=$('m-gal');
   if(!imgs.length){gal.innerHTML=`<div class="main">${icon(p.icon)}</div>`;}

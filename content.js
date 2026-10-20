@@ -52,7 +52,7 @@ window.SITE = {
     icon: "screen",
     images: ["assets/projects/touch-1.png"],
     tools: ["React PWA", "FastAPI", "PostgreSQL", "Ollama (local LLM)", "Agile"],
-    links: { screen: "mockups/touch-mtc-portal/Assistant.dc.html", report: "", code: "" },
+    links: { screen: "mockups/touch-mtc.html", report: "", code: "" },
     en: {
       title:   "MTC Portal & On-Prem AI Assistant",
       date:    "Internship · Aug 2026 · Beirut",
@@ -84,6 +84,7 @@ window.SITE = {
   },
   {
     id: "lyrflow",
+    demo: "animated",   // "animated" = watch-only demo; leave out for clickable demos
     label: { en: "Alttrust", fr: "Alttrust" },
     icon: "music",
     images: ["assets/projects/lyrflow-1.png", "assets/projects/lyrflow-2.png"],
@@ -354,10 +355,14 @@ window.SITE = {
     en: { projects: "Projects", experience: "Experience", skills: "Skills", contact: "Contact",
           kProjects: "Selected work", kExperience: "Path", hExperience: "Experience & Education", kSkills: "Toolkit", kContact: "Let’s work together",
           cv: "Download CV", email: "Email me", more: "Read more", context: "Context", didSolo: "What I did", didTeam: "What we built", result: "Result",
-          screen: "Open the full screen", report: "Read the report (PDF)", code: "View the code", close: "Close" },
+          screen: "Try the interactive demo", screenAnim: "Watch the animated demo", badge: "Interactive demo", badgeAnim: "Animated demo",
+          demoNote: "Opens in a new tab: click, type and filter as if you were using it. A short guide shows what to try.", demoNoteAnim: "Opens in a new tab: an animated walkthrough of the app’s main screen.",
+          projectsLead: "Every project comes with a live demo: open a card, then try it yourself.", report: "Read the report (PDF)", code: "View the code", close: "Close" },
     fr: { projects: "Projets", experience: "Parcours", skills: "Compétences", contact: "Contact",
           kProjects: "Réalisations", kExperience: "Parcours", hExperience: "Expériences & Formation", kSkills: "Boîte à outils", kContact: "Travaillons ensemble",
           cv: "Télécharger mon CV", email: "M’écrire", more: "En savoir plus", context: "Contexte", didSolo: "Ce que j’ai fait", didTeam: "Ce que nous avons réalisé", result: "Résultat",
-          screen: "Voir l’écran complet", report: "Lire le rapport (PDF)", code: "Voir le code", close: "Fermer" },
+          screen: "Tester la démo interactive", screenAnim: "Voir la démo animée", badge: "Démo interactive", badgeAnim: "Démo animée",
+          demoNote: "S’ouvre dans un nouvel onglet : cliquez, tapez, filtrez comme si vous l’utilisiez. Un petit guide indique quoi essayer.", demoNoteAnim: "S’ouvre dans un nouvel onglet : une démonstration animée de l’écran principal.",
+          projectsLead: "Chaque projet a sa démo en ligne : ouvrez une carte, puis essayez par vous-même.", report: "Lire le rapport (PDF)", code: "Voir le code", close: "Fermer" },
   },
 };

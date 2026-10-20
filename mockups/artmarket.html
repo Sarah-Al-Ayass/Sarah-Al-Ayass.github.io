@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Marchands d’Art — Signal précoce</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=1440">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -212,5 +212,7 @@ base.forEach((v,i)=>{if(v>thr[i]){s+=`<circle cx="${x(i)}" cy="${y(v)}" r="6" fi
 s+=`<g font-size="11" fill="#5C534B" transform="translate(${L+260-W} 0)"><rect x="${W-250}" y="${T}" width="10" height="3" fill="#6E1F2B"/><text x="${W-236}" y="${T+5}">attention</text><rect x="${W-170}" y="${T}" width="10" height="2" fill="#B08A3E"/><text x="${W-156}" y="${T+5}">seuil de pic (+25 %)</text></g>`;
 document.getElementById('att').innerHTML=s;})();
 </script>
+<script src="demo-kit.js"></script>
+<script src="artmarket-demo.js"></script>
 </body>
 </html>

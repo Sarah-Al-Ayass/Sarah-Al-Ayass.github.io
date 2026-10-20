@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=1440">
+<title>MTC Portal · Operations Console</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--side:#1E1240;--side2:#2E1E5E;--violet:#7C3AED;--violet2:#8B5CF6;--rose:#FB7185;--ink:#1E293B;--ink2:#475569;--ink3:#64748B;--ink4:#94A3B8;--line:#E2E8F0;--line2:#E5E9EF;--bg2:#F8FAFC;--ok:#059669;--ok-soft:#D1FAE5;--warn:#B45309;--warn-soft:#FEF3C7;--bad:#DC2626;--bad-soft:#FEE2E2;--blue:#1E40AF;--blue-soft:#DBEAFE}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Nunito Sans','Segoe UI',system-ui,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased}
+button{font:inherit;cursor:pointer}
+.mono{font-family:ui-monospace,Consolas,monospace}
+.app{display:flex;height:100vh;min-width:1280px;overflow:hidden}
+aside.side{width:248px;flex-shrink:0;background:var(--side);display:flex;flex-direction:column}
+.brand{height:88px;display:flex;align-items:center;gap:12px;padding:0 18px}
+.brand .lg{width:34px;height:34px;border-radius:50%;background:var(--rose);display:grid;place-items:center}
+.brand .lg i{width:20px;height:13px;border-radius:50%;background:#fff;display:block}
+.brand b{color:#fff;font-weight:800;font-size:16px;display:block}
+.brand small{color:var(--ink4);font-size:10px;font-weight:700;letter-spacing:.14em}
+nav a{display:flex;align-items:center;gap:14px;height:50px;padding:0 18px;font-size:14px;font-weight:600;color:#CBD5E1;text-decoration:none;cursor:pointer;transition:background .15s,color .15s}
+nav a:hover{background:#271A50;color:#fff}
+nav a.on{background:var(--side2);color:#fff;font-weight:700}
+nav a svg{flex:none}
+nav a .ct{margin-left:auto;font-size:11px;font-weight:700;background:var(--rose);color:#fff;border-radius:10px;padding:1px 7px}
+.side .foot{margin-top:auto;padding:16px 18px;color:#8B7FB0;font-size:11.5px;line-height:1.5;border-top:1px solid #2B1D55}
+.side .foot b{color:#C4B5FD}
+.col{flex-grow:1;display:flex;flex-direction:column;min-width:0;min-height:0}
+header{height:64px;flex-shrink:0;display:flex;align-items:center;gap:18px;padding:0 32px;border-bottom:1px solid var(--line2)}
+header .crumb{font-size:13px;color:var(--ink2)}
+header .crumb i{font-style:normal;color:var(--ink4);margin:0 6px}
+.ib{width:32px;height:32px;border:none;background:transparent;color:var(--ink4);display:grid;place-items:center;border-radius:8px}
+.ib:hover{background:#F1F5F9;color:var(--ink2)}
+.tag{font-family:ui-monospace,Consolas,monospace;font-size:11px;font-weight:700;color:var(--blue);background:var(--blue-soft);padding:3px 8px;border-radius:4px;letter-spacing:.04em}
+.avatar{width:32px;height:32px;border-radius:50%;border:none;background:#4C1D95;color:#fff;font-size:12px;font-weight:700}
+.body{flex-grow:1;display:flex;min-height:0;overflow:hidden}
+main{flex-grow:1;padding:30px 32px;display:flex;flex-direction:column;gap:14px;min-width:0;overflow:auto}
+.h{display:flex;flex-direction:column;gap:6px}
+.h .t{font-family:ui-monospace,Consolas,monospace;font-size:14px;letter-spacing:.06em}
+.h .s{font-size:13px;color:var(--ink3)}
+.sec{font-family:ui-monospace,Consolas,monospace;font-size:11px;letter-spacing:.08em;color:var(--ink2);margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.tile{border:1px solid var(--line);border-radius:8px;padding:16px 16px 18px;display:flex;flex-direction:column;gap:4px;background:#fff;text-align:left;transition:border-color .15s, box-shadow .15s, transform .15s}
+.tile:hover{border-color:#C4B5FD;box-shadow:0 8px 24px rgba(124,58,237,.10);transform:translateY(-1px)}
+.tile .ic{width:36px;height:36px;border-radius:6px;background:#F1F5F9;color:var(--ink2);display:grid;place-items:center;margin-bottom:18px;transition:all .15s}
+.tile:hover .ic{background:#EDE9FE;color:var(--violet)}
+.tile b{font-size:14px;font-weight:600}
+.tile span{font-size:12px;color:var(--ink3)}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{text-align:left;font-family:ui-monospace,Consolas,monospace;font-size:10.5px;letter-spacing:.08em;color:var(--ink3);font-weight:600;padding:9px 10px;border-bottom:1px solid var(--line)}
+td{padding:11px 10px;border-bottom:1px solid #F1F5F9;vertical-align:middle}
+tr.new td{animation:nw 1.6s ease}
+@keyframes nw{0%{background:#EDE9FE}100%{background:transparent}}
+.st{font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap}
+.st.ok{background:var(--ok-soft);color:var(--ok)}.st.wait{background:var(--warn-soft);color:var(--warn)}.st.bad{background:var(--bad-soft);color:var(--bad)}.st.esc{background:#EDE9FE;color:#6D28D9}
+.btn{border:1px solid var(--line);background:#fff;border-radius:7px;padding:6px 11px;font-size:12px;font-weight:700;color:var(--ink2)}
+.btn:hover{border-color:var(--ink4)}
+.btn.pri{background:var(--violet);border-color:var(--violet);color:#fff}
+.btn.pri:hover{background:#6D28D9}
+.btn.no{color:var(--bad)}
+.filters{display:flex;gap:8px;align-items:center}
+.filters input,.filters select{font:inherit;font-size:13px;border:1px solid #CBD5E1;border-radius:8px;padding:7px 10px;outline:none}
+.filters input:focus{border-color:var(--violet)}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:14px 16px}
+.stat small{font-size:12px;color:var(--ink3)}
+.stat b{display:block;font-size:24px;font-weight:800;margin-top:4px}
+.bars{display:flex;flex-direction:column;gap:8px;margin-top:8px}
+.bars div{display:grid;grid-template-columns:170px 1fr 50px;gap:10px;align-items:center;font-size:12.5px}
+.bars i{height:8px;border-radius:5px;background:var(--violet2);display:block}
+.bars em{font-style:normal;text-align:right;color:var(--ink3);font-family:ui-monospace,Consolas,monospace;font-size:12px}
+.logs{background:#0F0A24;color:#C4B5FD;border-radius:10px;padding:14px 16px;font-family:ui-monospace,Consolas,monospace;font-size:12px;line-height:1.7;height:520px;overflow:auto}
+.logs .lv{display:inline-block;width:46px}.logs .i{color:#86EFAC}.logs .w{color:#FCD34D}.logs .e{color:#FCA5A5}.logs time{color:#7C6FA8;margin-right:10px}
+.form{border:1px solid #C4B5FD;border-radius:10px;padding:18px;background:#FBFAFF;display:flex;flex-direction:column;gap:12px;animation:fi .25s ease}
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.form h3{font-size:15px;font-weight:800;display:flex;align-items:center;gap:10px}
+.form label{font-size:12px;font-weight:700;color:var(--ink2);display:flex;flex-direction:column;gap:5px}
+.form input,.form select,.form textarea{font:inherit;font-size:14px;border:1px solid #CBD5E1;border-radius:8px;padding:9px 11px;outline:none;background:#fff}
+.form input:focus,.form textarea:focus{border-color:var(--violet)}
+.form input.err{border-color:var(--bad);background:#FFF8F8}
+.form .hint{font-size:11.5px;color:var(--ink3);font-weight:600}
+.form .hint.err{color:var(--bad)}
+.form .row{display:flex;gap:10px}
+.form .row>*{flex:1}
+.drop{border:1.5px dashed #C4B5FD;border-radius:8px;padding:14px;text-align:center;font-size:12.5px;color:var(--ink3);background:#fff}
+.drop b{color:var(--violet)}
+.result{border:1px solid #A7F3D0;background:#F0FDF7;border-radius:8px;padding:12px 14px;font-size:13px}
+/* assistant */
+.asst{width:430px;flex-shrink:0;border-left:1px solid var(--line2);display:flex;flex-direction:column;background:#fff;transition:width .25s}
+.asst.closed{width:0;overflow:hidden;border:0}
+.ah{height:56px;padding:0 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--line2);flex:none}
+.ah .bub{width:30px;height:30px;border-radius:50%;background:var(--violet2);color:#fff;display:grid;place-items:center}
+.ah b{font-size:14px;font-weight:700;display:block}
+.ah small{font-family:ui-monospace,Consolas,monospace;font-size:10px;letter-spacing:.06em;color:var(--ink3)}
+.ah small i{display:inline-block;width:6px;height:6px;border-radius:50%;background:#10B981;margin-right:5px;vertical-align:1px}
+.msgs{flex-grow:1;padding:18px;display:flex;flex-direction:column;gap:12px;font-size:13px;line-height:1.5;background:var(--bg2);overflow:auto;min-height:0}
+.me{align-self:flex-end;max-width:300px;background:var(--violet);color:#fff;padding:9px 13px;border-radius:12px 12px 3px 12px;animation:fi .2s ease}
+.bot{max-width:350px;background:#fff;border:1px solid var(--line);padding:10px 13px;border-radius:12px 12px 12px 3px;display:flex;flex-direction:column;gap:6px;animation:fi .2s ease}
+.bot .r{display:flex;gap:8px}.bot .r span:first-child{flex-grow:1;color:#334155}.bot .r span:last-child{color:var(--ink3)}
+.bot .src{font-size:11px;color:var(--ink4)}
+.bot .ex{display:flex;gap:6px;align-items:center}
+.bot .ex a{font-size:12px;font-weight:600;padding:4px 10px;border:1px solid var(--line);border-radius:6px;color:#334155;text-decoration:none;cursor:pointer}
+.bot .ex a:hover{border-color:var(--violet);color:var(--violet)}
+.typing{display:flex;gap:4px;align-items:center;color:var(--ink4);font-size:11.5px}
+.typing i{width:6px;height:6px;border-radius:50%;background:#C4B5FD;animation:bl 1s infinite}
+.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes bl{0%,80%,100%{opacity:.3}40%{opacity:1}}
+.af{padding:12px 16px 16px;border-top:1px solid var(--line2);display:flex;flex-direction:column;gap:10px;flex:none}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{font-size:12px;padding:5px 11px;border:1px solid var(--line);border-radius:14px;background:#fff;color:#334155}
+.chips button:hover{border-color:var(--violet);color:var(--violet)}
+.ask{display:flex;align-items:center;gap:8px;padding:4px 4px 4px 12px;border:1px solid #CBD5E1;border-radius:10px}
+.ask:focus-within{border-color:var(--violet)}
+.ask input{flex-grow:1;border:none;outline:none;font:inherit;font-size:13px;background:transparent}
+.ask button{width:36px;height:36px;border:none;border-radius:8px;background:var(--violet);color:#fff;display:grid;place-items:center}
+.reopen{position:fixed;right:20px;top:76px;background:var(--violet);color:#fff;border:0;border-radius:20px;padding:8px 14px;font-weight:700;font-size:12.5px;display:none;box-shadow:0 8px 20px rgba(124,58,237,.35)}
+.reopen.on{display:block}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="side">
+    <div class="brand"><div class="lg"><i></i></div><div><b>MTC Portal</b><small>OPERATIONS CONSOLE</small></div></div>
+    <nav id="nav"></nav>
+    <div class="foot"><b>On-premise</b> · React PWA, FastAPI, PostgreSQL. The assistant runs a local LLM (Ollama): no data leaves the network.</div>
+  </aside>
+  <div class="col">
+    <header>
+      <span class="crumb">Touch <i>/</i> MTC internal portal <i>/</i> <b id="crumbPage">New Request</b></span>
+      <button class="ib" id="refresh" aria-label="Refresh" style="margin-left:auto"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 0 1-15.5 6.3L3 16M3 12a9 9 0 0 1 15.5-6.3L21 8M21 3v5h-5M3 21v-5h5"/></svg></button>
+      <span style="font-size:14px;font-weight:600">Nour Khalil (nour)</span>
+      <span class="tag">ADMIN</span>
+      <span style="width:1px;height:24px;background:var(--line2)"></span>
+      <button class="avatar" id="acct">NK</button>
+    </header>
+    <div class="body">
+      <main id="main"></main>
+      <aside class="asst" id="asst">
+        <div class="ah">
+          <div class="bub"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22z"/></svg></div>
+          <div><b>Portal Assistant</b><small><i></i>LOCAL · OFFLINE · OLLAMA</small></div>
+          <button class="ib" id="closeA" aria-label="Close assistant" style="margin-left:auto"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg></button>
+        </div>
+        <div class="msgs" id="msgs"></div>
+        <div class="af">
+          <div class="chips" id="chips"></div>
+          <form class="ask" id="askF"><input id="ask" autocomplete="off" placeholder="Posez une question / Ask a question…"><button aria-label="Send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></form>
+        </div>
+      </aside>
+    </div>
+  </div>
+</div>
+<button class="reopen" id="reopen">💬 Portal Assistant</button>
+
+<script src="demo-kit.js"></script>
+<script>
+(function(){
+var K=window.DemoKit,$=K.$,$$=K.$$,esc=K.esc;
+var I={plus:'M12 8v8M8 12h8M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z',folder:'M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z',check:'M9 12l2 2 4-4M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z',layers:'M12 3l9 5-9 5-9-5zM3 13l9 5 9-5',db:'M4 6c0-1.7 3.6-3 8-3s8 1.3 8 3-3.6 3-8 3-8-1.3-8-3zM4 6v12c0 1.7 3.6 3 8 3s8-1.3 8-3V6M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3',users:'M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 12 0v1M16 3.1a4 4 0 0 1 0 7.8M22 21v-1a6 6 0 0 0-4-5.6',term:'M4 17l6-5-6-5M12 19h8',refresh:'M21 12a9 9 0 0 1-15.5 6.3L3 16M3 12a9 9 0 0 1 15.5-6.3L21 8M21 3v5h-5M3 21v-5h5',ticket:'M3 8h18v3a2 2 0 0 0 0 2v3H3v-3a2 2 0 0 0 0-2zM10 8v8',cal:'M4 6h16v14H4zM4 10h16M8 3v4M16 3v4',swap:'M4 8h14l-3-3M20 16H6l3 3',trend:'M3 17l6-6 4 4 8-8M15 7h6v6',card:'M3 6h18v12H3zM3 10h18',wifi:'M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0M12 19h.01',filter:'M3 5h18l-7 8v6l-4-2v-4z',msg:'M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z',star:'M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z',doc:'M6 3h9l4 4v14H6zM9 12h6M9 16h6'};
+function svg(d,s){return '<svg width="'+(s||16)+'" height="'+(s||16)+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="'+d+'"/></svg>';}
+var TYPES={single:[['Recharge check','Check the last recharge on one line','refresh'],['Voucher','Look up a voucher for one number','ticket'],['Days','Days-type recharge lookup','cal']],
+ list:[['Billing cycle','Billing cycle for an attached list','swap'],['ARPU','Last month’s ARPU for a list','trend'],['Data bundle subscription','Latest data bundle subscription type','db'],['SIM version','SIM version for a list of numbers','card'],['Existing data services','Existing data services for a list','wifi'],['Postpaid filter','Postpaid-only filter on a list','filter']],
+ criteria:[['MCSMS service','Who has MCSMS service','msg'],['Star package','Who has Star package','star'],['Tariff profile','Tariff profile for HS postpaid lines','doc']]};
+var now=new Date();function hm(d){d=d||new Date();return ('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);}
+var REQS=[
+ {id:'REQ-2026-10487',type:'Voucher',target:'03 418 207',by:'nour',st:'esc',time:'09:02',note:'Auto-escalated to Admin at 09:32: IT didn’t respond within 30 min.'},
+ {id:'REQ-2026-10486',type:'ARPU',target:'list · 1,240 lines',by:'rami',st:'wait',time:'08:55',note:'Waiting for IT.'},
+ {id:'REQ-2026-10485',type:'Recharge check',target:'71 552 904',by:'nour',st:'ok',time:'08:41',note:'Last recharge: $10.00 on 18/10/2026 (Magic Card).'},
+ {id:'REQ-2026-10484',type:'SIM version',target:'list · 312 lines',by:'lea',st:'bad',time:'08:30',note:'Rejected: attachment missing.'},
+ {id:'REQ-2026-10483',type:'Star package',target:'criteria',by:'nour',st:'ok',time:'08:12',note:'4,812 subscribers matched. Exported to Excel.'},
+ {id:'REQ-2026-10482',type:'Days',target:'76 230 118',by:'karim',st:'wait',time:'07:58',note:'Waiting for IT.'}];
+var next=10488;
+var STL={ok:['Approved','ok'],wait:['Pending IT','wait'],bad:['Rejected','bad'],esc:['Final approval','esc']};
+var PAGES=['New Request','My Requests','Final Approvals','All Requests','Database','Manage Accounts','Logs'];
+var PICONS=['plus','folder','check','layers','db','users','term'];
+var page='New Request';
+
+function navR(){var pend=REQS.filter(function(r){return r.st==='esc'}).length;
+ $('#nav').innerHTML=PAGES.map(function(p,i){return '<a data-p="'+p+'" class="'+(p===page?'on':'')+'">'+svg(I[PICONS[i]],19)+'<span>'+p+'</span>'+(p==='Final Approvals'&&pend?'<span class="ct">'+pend+'</span>':'')+'</a>';}).join('');
+ $$('#nav a').forEach(function(a){a.onclick=function(){go(a.dataset.p);K.done('nav');};});}
+function go(p){page=p;$('#crumbPage').textContent=p;navR();VIEWS[p]();$('#main').scrollTop=0;}
+function badge(st){var s=STL[st];return '<span class="st '+s[1]+'">'+s[0]+'</span>';}
+
+var VIEWS={
+ 'New Request':function(){
+  var h='<div class="h"><span class="t">NEW REQUEST</span><span class="s">Choose what you need. Requests go to IT, then escalate to an admin after 30 min.</span></div><div id="formSlot"></div>';
+  [['single','SINGLE NUMBER'],['list','CUSTOMER LIST'],['criteria','CRITERIA FILTER']].forEach(function(g){
+   h+='<span class="sec">'+g[1]+'</span><div class="grid">'+TYPES[g[0]].map(function(c){return '<button class="tile" data-g="'+g[0]+'" data-t="'+c[0]+'"><div class="ic">'+svg(I[c[2]])+'</div><b>'+c[0]+'</b><span>'+c[1]+'</span></button>';}).join('')+'</div>';});
+  $('#main').innerHTML=h;
+  $$('.tile').forEach(function(b){b.onclick=function(){form(b.dataset.g,b.dataset.t);};});
+ },
+ 'My Requests':function(){table(REQS.filter(function(r){return r.by==='nour'}),'MY REQUESTS','Requests you submitted today.');},
+ 'All Requests':function(){
+  $('#main').innerHTML='<div class="h"><span class="t">ALL REQUESTS</span><span class="s">Every request from the operations teams.</span></div><div class="filters"><input id="q" placeholder="Search ID, number or type…"><select id="fs"><option value="">All statuses</option><option value="wait">Pending IT</option><option value="esc">Final approval</option><option value="ok">Approved</option><option value="bad">Rejected</option></select></div><div id="tbl"></div>';
+  function draw(){var q=$('#q').value.toLowerCase(),f=$('#fs').value;tableInto($('#tbl'),REQS.filter(function(r){return (!f||r.st===f)&&(r.id+r.type+r.target+r.by).toLowerCase().indexOf(q)>=0;}));}
+  $('#q').oninput=draw;$('#fs').onchange=draw;draw();
+ },
+ 'Final Approvals':function(){
+  var list=REQS.filter(function(r){return r.st==='esc'});
+  var h='<div class="h"><span class="t">FINAL APPROVALS</span><span class="s">Escalated requests waiting for an admin sign-off.</span></div>';
+  h+=list.length?'<table><thead><tr><th>ID</th><th>TYPE</th><th>TARGET</th><th>WHY ESCALATED</th><th></th></tr></thead><tbody>'+list.map(function(r){return '<tr><td class="mono">'+r.id+'</td><td>'+r.type+'</td><td class="mono">'+esc(r.target)+'</td><td style="color:var(--ink3);font-size:12.5px">'+r.note+'</td><td style="white-space:nowrap"><button class="btn pri" data-a="ok" data-id="'+r.id+'">Approve</button> <button class="btn no" data-a="bad" data-id="'+r.id+'">Reject</button></td></tr>';}).join('')+'</tbody></table>':'<div class="result">✓ Nothing waiting for you. All escalated requests are handled.</div>';
+  $('#main').innerHTML=h;
+  $$('[data-a]').forEach(function(b){b.onclick=function(){var r=REQS.filter(function(x){return x.id===b.dataset.id})[0];r.st=b.dataset.a;r.note=r.st==='ok'?'Approved by nour at '+hm()+'. Voucher 4-digit PIN sent to the requester.':'Rejected by nour at '+hm()+'.';K.toast(r.id+(r.st==='ok'?' approved':' rejected'));K.done('approve');log('i','approval '+r.id+' → '+r.st+' by nour');go('Final Approvals');};});
+ },
+ 'Database':function(){
+  var c={ok:0,wait:0,bad:0,esc:0};REQS.forEach(function(r){c[r.st]++;});
+  $('#main').innerHTML='<div class="h"><span class="t">DATABASE</span><span class="s">PostgreSQL · requests schema · read-only view.</span></div><div class="stats">'+
+  [['Requests (Sept.)','1,284'],['Approved','81 %'],['Rejected','11 %'],['Escalated','6.4 %']].map(function(s){return '<div class="stat"><small>'+s[0]+'</small><b>'+s[1]+'</b></div>';}).join('')+'</div>'+
+  '<span class="sec">VOLUME BY REQUEST TYPE · SEPT. 2026</span><div class="bars">'+[['Recharge check',412],['Voucher',306],['ARPU',171],['Days',128],['Billing cycle',94],['SIM version',77],['Other',96]].map(function(b){return '<div><span>'+b[0]+'</span><i style="width:'+(b[1]/412*100)+'%"></i><em>'+b[1]+'</em></div>';}).join('')+'</div>'+
+  '<span class="sec">TODAY</span><div class="bars">'+[['Approved',c.ok,'#10B981'],['Pending IT',c.wait,'#F59E0B'],['Final approval',c.esc,'#8B5CF6'],['Rejected',c.bad,'#EF4444']].map(function(b){return '<div><span>'+b[0]+'</span><i style="width:'+Math.max(2,b[1]/REQS.length*100)+'%;background:'+b[2]+'"></i><em>'+b[1]+'</em></div>';}).join('')+'</div>';
+ },
+ 'Manage Accounts':function(){
+  var U=[['Nour Khalil','nour','Admin',true],['Rami Haddad','rami','Operations',true],['Léa Saab','lea','Operations',true],['Karim Nassar','karim','Operations',true],['IT queue','it-desk','IT',true],['Maya Aoun','maya','Operations',false]];
+  $('#main').innerHTML='<div class="h"><span class="t">MANAGE ACCOUNTS</span><span class="s">Role-based access: Operations submit, IT processes, Admin approves.</span></div><table><thead><tr><th>NAME</th><th>USERNAME</th><th>ROLE</th><th>STATUS</th><th></th></tr></thead><tbody>'+U.map(function(u,i){return '<tr><td><b>'+u[0]+'</b></td><td class="mono">'+u[1]+'</td><td>'+u[2]+'</td><td>'+(u[3]?'<span class="st ok">Active</span>':'<span class="st bad">Disabled</span>')+'</td><td><button class="btn" data-u="'+i+'">'+(u[3]?'Disable':'Enable')+'</button></td></tr>';}).join('')+'</tbody></table>';
+  $$('[data-u]').forEach(function(b){b.onclick=function(){var u=U[+b.dataset.u];u[3]=!u[3];b.textContent=u[3]?'Disable':'Enable';b.closest('tr').cells[3].innerHTML=u[3]?'<span class="st ok">Active</span>':'<span class="st bad">Disabled</span>';K.toast(u[0]+(u[3]?' enabled':' disabled'));log('w','account '+u[1]+(u[3]?' enabled':' disabled')+' by nour');};});
+ },
+ 'Logs':function(){$('#main').innerHTML='<div class="h"><span class="t">LOGS</span><span class="s">Live API logs (FastAPI). New lines appear as you use the portal.</span></div><div class="logs" id="logs">'+LOGS.map(fmtLog).join('')+'</div>';var l=$('#logs');l.scrollTop=l.scrollHeight;}
+};
+function tableInto(el,rows){el.innerHTML='<table><thead><tr><th>ID</th><th>TYPE</th><th>TARGET</th><th>BY</th><th>TIME</th><th>STATUS</th></tr></thead><tbody>'+rows.map(function(r){return '<tr class="'+(r.fresh?'new':'')+'" title="'+esc(r.note)+'"><td class="mono">'+r.id+'</td><td>'+r.type+'</td><td class="mono">'+esc(r.target)+'</td><td>'+r.by+'</td><td class="mono">'+r.time+'</td><td>'+badge(r.st)+'</td></tr>';}).join('')+'</tbody></table>'+(rows.length?'':'<div style="padding:16px;color:var(--ink3)">No request matches.</div>');rows.forEach(function(r){r.fresh=false;});}
+function table(rows,t,s){$('#main').innerHTML='<div class="h"><span class="t">'+t+'</span><span class="s">'+s+' Hover a row for details.</span></div><div id="tbl"></div>';tableInto($('#tbl'),rows);}
+
+/* ---------- request form ---------- */
+var NUM=/^(03|70|71|76|78|79|81)\s?\d{3}\s?\d{3}$/;
+function form(g,type){
+ var slot=$('#formSlot');
+ var body='';
+ if(g==='single') body='<label>Mobile number<input id="num" placeholder="e.g. 03 418 207" inputmode="numeric"></label><span class="hint" id="nh">Lebanese mobile format: 03, 70, 71, 76, 78, 79 or 81 + 6 digits.</span>';
+ if(g==='list') body='<div class="drop" id="drop"><b>Attach a list</b> (.xlsx / .csv) · or <b id="sample" style="cursor:pointer;text-decoration:underline">use the sample list (1,240 lines)</b></div>';
+ if(g==='criteria') body='<div class="row"><label>Region<select><option>All regions</option><option>Beirut</option><option>Mount Lebanon</option><option>North</option><option>South</option><option>Bekaa</option></select></label><label>Line type<select><option>Prepaid + postpaid</option><option>Postpaid only</option><option>Prepaid only</option></select></label></div>';
+ slot.innerHTML='<div class="form"><h3>'+svg(I.plus)+'New request · '+type+'</h3>'+body+'<label>Reason<select id="why"><option>Customer complaint</option><option>Retention offer</option><option>Fraud check</option><option>Internal audit</option></select></label><div style="display:flex;gap:8px;justify-content:flex-end"><button class="btn" id="cancel">Cancel</button><button class="btn pri" id="submit">Submit request</button></div></div>';
+ slot.scrollIntoView({behavior:'smooth',block:'nearest'});
+ var listOk=false;
+ if($('#sample')) $('#sample').onclick=function(){listOk=true;$('#drop').innerHTML='✓ <b>sample_list.xlsx</b> · 1,240 lines · 2 invalid numbers removed';};
+ if($('#num')){$('#num').focus();$('#num').oninput=function(){var v=$('#num').value.trim(),ok=NUM.test(v);$('#num').classList.toggle('err',v.length>5&&!ok);$('#nh').classList.toggle('err',v.length>5&&!ok);$('#nh').textContent=v.length>5&&!ok?'Not a valid Lebanese mobile number.':'Lebanese mobile format: 03, 70, 71, 76, 78, 79 or 81 + 6 digits.';};}
+ $('#cancel').onclick=function(){slot.innerHTML='';};
+ $('#submit').onclick=function(){
+  var target;
+  if(g==='single'){var v=$('#num').value.trim();if(!NUM.test(v)){$('#num').classList.add('err');$('#nh').classList.add('err');$('#nh').textContent='Please enter a valid number, e.g. 03 418 207.';$('#num').focus();return;}var d=v.replace(/\s/g,'');target=d.slice(0,2)+' '+d.slice(2,5)+' '+d.slice(5);}
+  else if(g==='list'){if(!listOk){K.toast('Attach a list first: try the sample list');return;}target='list · 1,240 lines';}
+  else target='criteria';
+  var r={id:'REQ-2026-'+(next++),type:type,target:target,by:'nour',st:'wait',time:hm(),note:'Waiting for IT.',fresh:true};
+  REQS.unshift(r);log('i','POST /requests '+r.id+' type="'+type+'" 201 Created');
+  slot.innerHTML='<div class="result">✓ <b class="mono">'+r.id+'</b> sent to IT. You’ll see it update in <b>My Requests</b>. Ask the assistant: “status of '+r.id+'”.</div>';
+  K.toast(r.id+' submitted');K.done('request');navR();
+  setTimeout(function(){r.st='ok';r.fresh=true;r.note=g==='single'?(type==='Voucher'?'Voucher 6214-8830 · $22.73 · valid until 30/11/2026.':'Last recharge: $10.00 on 18/10/2026.'):'Result ready: exported to Excel (on-premise file server).';log('i','IT processed '+r.id+' → approved (4.2 s)');K.toast(r.id+' approved by IT');if(page==='My Requests'||page==='All Requests')go(page);},6500);
+ };
+}
+
+/* ---------- logs ---------- */
+var LOGS=[['i','09:32:04','escalation job: REQ-2026-10487 > 30 min → admin'],['i','09:31:50','GET /requests?owner=nour 200 (14 ms)'],['w','09:30:12','PWA: service worker updated, cache v12'],['i','09:29:41','ollama: model llama3.1:8b loaded (local GPU)'],['i','09:29:40','assistant: retrieval index ready (412 docs)'],['e','09:12:03','auth: 1 failed login for user "maya" (account disabled)']];
+function fmtLog(l){return '<div><time>'+l[1]+'</time><span class="lv '+l[0]+'">'+({i:'INFO',w:'WARN',e:'ERROR'})[l[0]]+'</span>'+esc(l[2])+'</div>';}
+function log(lv,msg){var d=new Date(),ts=hm(d)+':'+('0'+d.getSeconds()).slice(-2);LOGS.push([lv,ts,msg]);var el=$('#logs');if(el){el.insertAdjacentHTML('beforeend',fmtLog([lv,ts,msg]));el.scrollTop=el.scrollHeight;}}
+
+/* ---------- assistant (local intent matching, bilingual) ---------- */
+var msgs=$('#msgs');
+function me(t){msgs.insertAdjacentHTML('beforeend','<div class="me"></div>');msgs.lastChild.textContent=t;msgs.scrollTop=msgs.scrollHeight;}
+function bot(html){var tp=document.createElement('div');tp.className='bot';tp.innerHTML='<span class="typing"><i></i><i></i><i></i> local model…</span>';msgs.appendChild(tp);msgs.scrollTop=msgs.scrollHeight;setTimeout(function(){tp.innerHTML=html;msgs.scrollTop=msgs.scrollHeight;bindEx(tp);},650+Math.random()*350);}
+function bindEx(el){$$('.ex a',el).forEach(function(a){a.onclick=function(e){e.preventDefault();K.toast(a.textContent+' report generated locally · saved to the file server');log('i','export '+a.textContent+' generated (on-premise)');};});}
+function fr(q){return /[éèàç]|\b(combien|quel|qui|comment|demande|valide|vérifier|statut|mois|est-ce|rejet)/i.test(q);}
+function answer(q){
+ var F=fr(q),m=q.match(/REQ-?\d{4}-?\d{5}|10\d{3}/i);
+ if(m){var key=m[0].toUpperCase().replace(/^(\d{5})$/,'REQ-2026-$1');var r=REQS.filter(function(x){return x.id===key||x.id.endsWith(m[0].slice(-5));})[0];
+  if(!r) return bot(F?'Je ne trouve pas <span class="mono">'+esc(m[0])+'</span> dans la base.':'I can’t find <span class="mono">'+esc(m[0])+'</span> in the database.');
+  return bot('<span><span class="mono" style="font-size:12px">'+r.id+'</span> ('+r.type+') · '+badge(r.st)+'</span><span>'+esc(r.note)+'</span>'+(r.st==='esc'?'<span class="src">'+(F?'→ Validez-la dans Final Approvals.':'→ Sign it off in Final Approvals.')+'</span>':''));}
+ if(/rejet|reject/i.test(q)) return bot('<span>'+(F?'En septembre 2026 : 48 demandes rejetées sur 412 (11,7 %). Motifs principaux :':'In September 2026: 48 of 412 requests rejected (11.7%). Main reasons:')+'</span>'+[[F?'Numéro ≠ pièce d’identité':'Number ≠ ID document',18],[F?'Pièce jointe manquante':'Missing attachment',12],[F?'Période > 90 jours':'Period > 90 days',9],[F?'Demande en double':'Duplicate request',9]].map(function(x){return '<div class="r"><span>· '+x[0]+'</span><span>'+x[1]+'</span></div>';}).join('')+'<span class="src">Source : rapport 2026-09</span>');
+ if(/analys|stat|résumé|summary|overview/i.test(q)) return bot('<span>'+(F?'Données actuelles : 1 284 demandes : 81 % approuvées, 11 % rejetées, 6,4 % escaladées. Les vérifications de recharge et les vouchers représentent 56 % du volume.':'Current data: 1,284 requests: 81% approved, 11% rejected, 6.4% escalated. Recharge checks and vouchers make up 56% of the volume.')+'</span><div class="ex"><span class="mono" style="font-size:11px;color:var(--ink3);margin-right:2px">EXPORT</span><a>PDF</a><a>Excel</a><a>Word</a></div>');
+ if(/escal/i.test(q)) return bot(F?'Une demande est <b>escaladée automatiquement</b> à un admin si l’IT ne répond pas sous <b>30 minutes</b>. Elle apparaît alors dans Final Approvals.':'A request is <b>auto-escalated</b> to an admin if IT doesn’t respond within <b>30 minutes</b>. It then shows up in Final Approvals.');
+ if(/valide|approv|qui |who /i.test(q)) return bot(F?'Le circuit : <b>Opérations</b> soumet → <b>IT</b> traite → si l’IT ne répond pas en 30 min, un <b>Admin</b> valide dans Final Approvals.':'The flow: <b>Operations</b> submit → <b>IT</b> processes → if IT doesn’t answer in 30 min, an <b>Admin</b> signs off in Final Approvals.');
+ if(/voucher/i.test(q)) {go('New Request');setTimeout(function(){form('single','Voucher');},50);return bot(F?'J’ai ouvert le formulaire <b>Voucher</b> : saisissez le numéro (ex. 03 418 207).':'I opened the <b>Voucher</b> form: enter the number (e.g. 03 418 207).');}
+ if(/submit|soumettre|nouvelle|new request|how do i|comment/i.test(q)) return bot(F?'Allez dans <b>New Request</b>, choisissez le type (numéro, liste ou critère), remplissez le formulaire et cliquez <b>Submit</b>. Vous suivez ensuite la demande dans My Requests.':'Go to <b>New Request</b>, pick the type (single number, list or criteria), fill in the form and click <b>Submit</b>. Then track it in My Requests.');
+ if(/data|donnée|privacy|confidential|cloud|offline|local/i.test(q)) return bot(F?'Je tourne sur un <b>LLM local (Ollama)</b> hébergé sur les serveurs de Touch : aucune question ni donnée client ne quitte le réseau.':'I run on a <b>local LLM (Ollama)</b> hosted on Touch’s servers: no question or customer data ever leaves the network.');
+ if(/bonjour|hello|hi\b|salut|merci|thanks/i.test(q)) return bot(F?'Bonjour ! Je peux suivre une demande, expliquer le circuit de validation ou analyser les statistiques.':'Hi! I can track a request, explain the approval flow or analyse the statistics.');
+ return bot(F?'Je peux répondre sur : le statut d’une demande (ex. « statut de REQ-2026-10487 »), les rejets du mois, l’escalade, ou ouvrir un formulaire.':'I can help with: a request’s status (e.g. “status of REQ-2026-10487”), this month’s rejections, escalation rules, or opening a form.');
+}
+function ask(q){q=q.trim();if(!q)return;me(q);answer(q);log('i','assistant query ('+q.length+' chars) answered locally');K.done('ask');}
+$('#askF').onsubmit=function(e){e.preventDefault();ask($('#ask').value);$('#ask').value='';};
+var CHIPS=['status of REQ-2026-10487?','combien de demandes rejetées ce mois-ci ?','When does a request escalate?','full analysis','Vérifier un voucher'];
+$('#chips').innerHTML=CHIPS.map(function(c){return '<button type="button">'+esc(c)+'</button>';}).join('');
+$$('#chips button').forEach(function(b){b.onclick=function(){ask(b.textContent);};});
+// opening conversation (same as the original screen)
+me('status of REQ-2026-10487?');
+msgs.insertAdjacentHTML('beforeend','<div class="bot"><span><span class="mono" style="font-size:12px">REQ-2026-10487</span> (Voucher) was auto-escalated to Admin at 09:32: IT didn’t respond within 30 min. It’s waiting for your sign-off in Final Approvals.</span></div>');
+
+$('#closeA').onclick=function(){$('#asst').classList.add('closed');$('#reopen').classList.add('on');};
+$('#reopen').onclick=function(){$('#asst').classList.remove('closed');$('#reopen').classList.remove('on');};
+$('#refresh').onclick=function(){log('i','GET /sync 200 (9 ms)');K.toast('Synced with the on-premise server');};
+$('#acct').onclick=function(){K.toast('Signed in as nour · role ADMIN');};
+
+go('New Request');
+K.guide({
+ intro:K.t('The internal portal I built at Touch: everything works, and the assistant runs locally.','Le portail interne réalisé chez Touch : tout fonctionne, et l’assistant tourne en local.'),
+ steps:[
+  {id:'request',text:K.t('Submit a request (e.g. Recharge check · 03 418 207)','Soumettez une demande (ex. Recharge check · 03 418 207)')},
+  {id:'ask',text:K.t('Ask the assistant a question, in English or French','Posez une question à l’assistant, en français ou en anglais')},
+  {id:'approve',text:K.t('Approve an escalated request in Final Approvals','Validez une demande escaladée dans Final Approvals')},
+  {id:'nav',text:K.t('Open Database or Logs in the sidebar','Ouvrez Database ou Logs dans le menu')}
+ ]
+});
+})();
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <title>Égérine — Advertising Performance</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=1440">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -261,5 +261,7 @@ document.getElementById('kpis').innerHTML=K.map(k=>`<div class="card kpi${k.hero
  rows.forEach((c,i)=>{const y=50+i*32;s+=`<rect x="162" y="${y-9}" width="9" height="9" rx="2" fill="${C[c.k]}"/><text x="177" y="${y}" font-size="11.5" fill="#252423">${c.n.replace('Google ','')}</text><text x="177" y="${y+13}" font-size="10.5" fill="#8A8886">${fmt(c.s/S*100,1)} %</text>`;});
  document.getElementById('donut').innerHTML=s;})();
 </script>
+<script src="demo-kit.js"></script>
+<script src="egerine-demo.js"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ All your text lives in **one file: `content.js`**. You never need to touch `inde
 | `index.html` | The design and layout | No |
 | `assets/projects/` | Project screenshots (card covers and pop-up gallery) | Add or replace images |
 | `cv/` | Your two CVs: `Sarah_Al_Ayass_CV_EN.pdf` and `Sarah_Al_Ayass_CV_FR.pdf` | Replace when your CV changes |
-| `mockups/` | The full-size project screens behind "Open the full screen" | Only to add a new screen |
+| `mockups/` | The interactive demos behind "Try the interactive demo" (`demo-kit.js` holds the shared guide, pop-ups and tooltips; each demo has its own `*-demo.js`) | Only to add a new demo |
 | `reports/` | (create it only if needed) Optional report PDFs for the "Read the report" button | Optional |
 
 ## The 3 rules when editing `content.js`
@@ -83,6 +83,9 @@ Section **2. KEY FACTS**. Each box has a `big` value (like `"RAG"` or `"0.89"`) 
 In that project's `links`:
 ```js
 links: { screen: "mockups/transfers.html", report: "reports/transfer-analysis.pdf", code: "https://github.com/you/repo" },
+```
+If a demo is only animated (nothing to click), add `demo: "animated",` to that project so its button says "Watch the animated demo".
+```js
 ```
 Leave a value as `""` to hide its button. Only publish a report if your teammates (and the client company) agree.
 
