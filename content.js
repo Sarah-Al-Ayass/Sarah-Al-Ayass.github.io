@@ -26,6 +26,8 @@ window.SITE = {
     github:    "",   // optional: paste your GitHub profile link to show a GitHub button
     cv:        { en: "cv/Sarah_Al_Ayass_CV_EN.pdf", fr: "cv/Sarah_Al_Ayass_CV_FR.pdf" },
     city:      "Paris",
+    photo:     "",   // optional: e.g. "assets/photo.jpg" (portrait, vertical). Leave "" to show your initials in the arch.
+    clients:   ["Touch (MTC Liban)", "Pangea Summit", "Marchands d’Art", "Égérine", "Alttrust"],
   },
 
   /* ---------- 2. KEY FACTS (the 4 boxes under your name) ---------- */
@@ -357,12 +359,12 @@ window.SITE = {
           cv: "Download CV", email: "Email me", more: "Read more", context: "Context", didSolo: "What I did", didTeam: "What we built", result: "Result",
           screen: "Try the interactive demo", screenAnim: "Watch the animated demo", badge: "Interactive demo", badgeAnim: "Animated demo",
           demoNote: "Opens in a new tab: click, type and filter as if you were using it. A short guide shows what to try.", demoNoteAnim: "Opens in a new tab: an animated walkthrough of the app’s main screen.",
-          projectsLead: "Every project comes with a live demo: open a card, then try it yourself.", report: "Read the report (PDF)", code: "View the code", close: "Close" },
+          projectsLead: "Seven projects, each with a demo you can try in your browser.", trust: "Trusted by", viewProjects: "See the projects", available: "Available", readProject: "Read the project", hSkills: "What I build with", report: "Read the report (PDF)", code: "View the code", close: "Close" },
     fr: { projects: "Projets", experience: "Parcours", skills: "Compétences", contact: "Contact",
           kProjects: "Réalisations", kExperience: "Parcours", hExperience: "Expériences & Formation", kSkills: "Boîte à outils", kContact: "Travaillons ensemble",
           cv: "Télécharger mon CV", email: "M’écrire", more: "En savoir plus", context: "Contexte", didSolo: "Ce que j’ai fait", didTeam: "Ce que nous avons réalisé", result: "Résultat",
           screen: "Tester la démo interactive", screenAnim: "Voir la démo animée", badge: "Démo interactive", badgeAnim: "Démo animée",
           demoNote: "S’ouvre dans un nouvel onglet : cliquez, tapez, filtrez comme si vous l’utilisiez. Un petit guide indique quoi essayer.", demoNoteAnim: "S’ouvre dans un nouvel onglet : une démonstration animée de l’écran principal.",
-          projectsLead: "Chaque projet a sa démo en ligne : ouvrez une carte, puis essayez par vous-même.", report: "Lire le rapport (PDF)", code: "Voir le code", close: "Fermer" },
+          projectsLead: "Sept projets, chacun avec une démo que vous pouvez essayer dans le navigateur.", trust: "Ils m’ont fait confiance", viewProjects: "Voir les projets", available: "Disponible", readProject: "Lire le projet", hSkills: "Mes outils", report: "Lire le rapport (PDF)", code: "Voir le code", close: "Fermer" },
   },
 };

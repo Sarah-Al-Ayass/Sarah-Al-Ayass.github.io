@@ -98,6 +98,14 @@ Section **4. EXPERIENCE**: copy one `{ when: ..., title: ..., place: ..., points
 ### Update your CV
 Replace the files in `cv/`, keeping the **same names**: `Sarah_Al_Ayass_CV_EN.pdf` and `Sarah_Al_Ayass_CV_FR.pdf`.
 
+### Add your photo (the arch at the top)
+1. Put a vertical portrait in `assets/` (for example `assets/photo.jpg`, about 900 × 1200 px).
+2. In `content.js`, section **1. PROFILE**, write its path: `photo: "assets/photo.jpg",`
+Until then, the arch shows your initials.
+
+### Change the companies under the hero
+In **1. PROFILE**, edit the `clients: [...]` list.
+
 ### Add your GitHub profile
 In **1. PROFILE**, paste your link in `github: ""`. A GitHub button appears automatically.
 
