@@ -87,30 +87,32 @@ section{padding:128px 0;position:relative}
 .sh h2{font-family:var(--serif);font-weight:400;font-size:clamp(56px,7vw,92px);line-height:1;letter-spacing:-.02em;color:var(--ivory)}
 .sh p{font-size:17px;color:var(--soft);max-width:380px;line-height:1.55}
 
-/* projects index */
-.pj{display:grid;grid-template-columns:1fr 500px;gap:56px;align-items:start}
-.ix{list-style:none;border-bottom:1px solid var(--hair)}
-.row{display:grid;grid-template-columns:1fr 190px 56px;align-items:baseline;gap:12px;width:100%;text-align:left;padding:17px 0;border-top:1px solid var(--hair);color:var(--soft)}
-.row b{font-family:var(--serif);font-weight:400;font-size:28px;line-height:1.2;color:var(--champ);letter-spacing:-.005em;transition:color .25s,padding .25s;display:flex;align-items:center}
-.row b:before{content:"";width:0;height:1px;background:var(--gold);margin-right:0;transition:width .3s,margin .3s;flex:none}
-.row span{font-size:14.5px}
-.row em{font-style:normal;font-size:14.5px;text-align:right;color:var(--mute)}
-.row.on b{color:var(--gold2);font-style:italic}
-.row.on b:before{width:34px;margin-right:16px}
-.row:hover b{color:var(--ivory)}
-.row.on:hover b{color:var(--gold2)}
-.row .thumb{display:none}
-.prev{position:sticky;top:116px}
-.prev .img{border:1px solid var(--line);padding:10px;background:rgba(14,26,47,.6);aspect-ratio:16/10}
-.prev .img img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block;transition:opacity .25s}
-.prev .img img.fade{opacity:0}
-.prev .lab{display:flex;align-items:center;gap:10px;margin-top:24px;font-size:14px;color:var(--mute)}
-.prev .lab i{width:7px;height:7px;border-radius:50%;background:#5BD08C}
-.prev .lab i.anim{background:var(--gold2)}
-.prev h3{font-family:var(--serif);font-weight:400;font-size:23px;line-height:1.35;margin-top:8px;color:var(--ivory)}
-.prev p{font-size:15.5px;line-height:1.65;color:var(--soft);margin-top:12px}
-.tools{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:16px;font-size:13.5px;color:var(--gold2)}
-.prev .acts{display:flex;gap:26px;align-items:center;margin-top:26px;flex-wrap:wrap}
+/* projects: featured + grid */
+.feat{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:56px;align-items:center;padding-bottom:64px;border-bottom:1px solid var(--hair)}
+.frame{position:relative;display:block;border:1px solid var(--line);padding:10px;background:rgba(14,26,47,.6);overflow:hidden}
+.frame .im{aspect-ratio:16/10;overflow:hidden;background:#0B1424}
+.frame img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.frame .ph{display:grid;place-items:center;height:100%}.frame .ph svg{width:64px;height:64px;stroke:var(--gold);fill:none;stroke-width:1.2}
+.live{position:absolute;left:22px;bottom:22px;display:inline-flex;align-items:center;gap:8px;background:rgba(14,26,47,.9);border:1px solid var(--line);color:var(--ivory);font-size:12.5px;padding:6px 12px}
+.live i{width:7px;height:7px;border-radius:50%;background:#5BD08C;flex:none}
+.live.anim i{background:var(--gold2)}
+.meta2{display:flex;justify-content:space-between;gap:16px;font-size:14px;color:var(--soft)}
+.meta2 em{font-style:normal;color:var(--mute)}
+.feat h3{font-family:var(--serif);font-weight:400;font-size:clamp(32px,3.2vw,44px);line-height:1.1;color:var(--ivory);margin-top:14px;letter-spacing:-.01em}
+.feat p{font-size:16.5px;line-height:1.65;color:var(--soft);margin-top:16px}
+.tools{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:18px;font-size:13.5px;color:var(--gold2)}
+.acts{display:flex;gap:26px;align-items:center;margin-top:28px;flex-wrap:wrap}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:56px 40px;margin-top:64px}
+.pc{display:flex;flex-direction:column;text-align:left;width:100%}
+.pc .frame{padding:8px}
+.pc .live{left:18px;bottom:18px}
+.pc .meta2{margin-top:20px}
+.pc h3{font-family:var(--serif);font-weight:400;font-size:25px;line-height:1.22;color:var(--champ);margin-top:8px;transition:color .25s}
+.pc p{font-size:15px;line-height:1.6;color:var(--soft);margin-top:10px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.pc .more{margin-top:16px;font-size:14.5px;color:var(--champ);align-self:flex-start;border-bottom:1px solid var(--line);padding-bottom:3px;transition:color .2s,border-color .2s}
+.pc:hover img,.feat .frame:hover img{transform:scale(1.03)}
+.pc:hover h3{color:var(--gold2)}
+.pc:hover .more{color:var(--gold2);border-color:var(--gold2)}
 
 /* skills */
 #skills{background:var(--panel)}
@@ -185,8 +187,8 @@ html.lock,html.lock body{overflow:hidden}
 
 /* responsive */
 @media (max-width:1100px){
-  .pj{grid-template-columns:1fr 400px;gap:40px}
-  .row{grid-template-columns:1fr 150px 48px}
+  .pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feat{gap:40px}
 }
 @media (max-width:900px){
   .wrap{padding:0 22px}
@@ -208,14 +210,8 @@ html.lock,html.lock body{overflow:hidden}
   .trust .wrap{gap:10px 26px;font-size:18px}
   .trust small{flex-basis:100%}
   section{padding:84px 0}
-  .pj{grid-template-columns:1fr}
-  .prev{display:none}
-  .row{grid-template-columns:1fr;gap:4px;padding:20px 0}
-  .row .thumb{display:block;order:-1;aspect-ratio:16/9;border:1px solid var(--line);padding:6px;margin-bottom:12px}
-  .row .thumb img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
-  .row b{font-size:27px}
-  .row.on b{font-style:normal;color:var(--champ)}.row.on b:before{width:0;margin:0}
-  .row em{text-align:left}
+  .feat{grid-template-columns:1fr;gap:26px;padding-bottom:48px}
+  .pgrid{grid-template-columns:1fr;gap:48px;margin-top:48px}
   .skills{grid-template-columns:1fr}
   .sk,.sk:not(:nth-child(3n+1)){padding:24px 0;border-left:0}
   .item{grid-template-columns:1fr;gap:6px}
@@ -259,10 +255,8 @@ html.lock,html.lock body{overflow:hidden}
 
 <section id="projects"><div class="wrap">
   <div class="sh"><h2 data-l="projects"></h2><p data-l="projectsLead"></p></div>
-  <div class="pj">
-    <ul class="ix" id="pindex"></ul>
-    <aside class="prev" id="prev" aria-live="polite"></aside>
-  </div>
+  <div class="feat" id="pfeat"></div>
+  <div class="pgrid" id="pgrid"></div>
 </div></section>
 
 <dialog id="modal" aria-labelledby="m-title">
@@ -324,7 +318,7 @@ const icon=n=>`<svg viewBox="0 0 24 24">${ICONS[n]||ICONS.code}</svg>`;
 const P=S.profile, $=id=>document.getElementById(id);
 const dl='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v12m0 0l-5-5m5 5l5-5M5 21h14"/></svg>';
 const play='<svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z"/></svg>';
-let lang='en', cur=0;
+let lang='en';
 
 /* thin "neural" line drawing behind the initials: a quiet nod to the AI work */
 function net(){
@@ -370,35 +364,22 @@ function year(d){const m=String(d.date||'').match(/20\d\d(?!.*20\d\d)/);return m
 function client(p,l){const lb=tx(p.label,l);return lb.indexOf('×')>=0?lb.split('×').pop().trim():(lb==='In progress'||lb==='En cours'?(l==='fr'?'Projet personnel':'Personal project'):lb.replace(/ · /,', '));}
 function demoUrl(p){const k=p.links||{};return k.screen?k.screen+(k.screen.indexOf('?')<0?'?lang='+lang:''):'';}
 
+function badgeHtml(p,L){const k=p.links||{};return k.screen?`<span class="live${p.demo==='animated'?' anim':''}"><i></i>${esc(p.demo==='animated'?L.badgeAnim:L.badge)}</span>`:'';}
+function frame(p,d){const cover=(p.images||[])[0];return `<div class="im">${cover?`<img src="${esc(cover)}" alt="${esc(d.title)}" loading="lazy">`:`<div class="ph">${icon(p.icon)}</div>`}</div>`;}
 function renderIndex(l){
-  const ul=$('pindex'); ul.innerHTML='';
-  S.projects.forEach((p,i)=>{
-    const d=p[l]||p.en, li=document.createElement('li'), cover=(p.images||[])[0];
-    li.innerHTML=`<button class="row${i===cur?' on':''}" type="button" data-i="${i}">${cover?`<span class="thumb"><img src="${esc(cover)}" alt="" loading="lazy"></span>`:''}<b>${esc(d.title)}</b><span>${esc(client(p,l))}</span><em>${esc(year(d))}</em></button>`;
-    ul.appendChild(li);
+  const L=S.labels[l], f=S.projects[0], fd=f[l]||f.en, fk=f.links||{};
+  $('pfeat').innerHTML=`<button class="frame" type="button" id="featimg" aria-label="${esc(fd.title)}">${frame(f,fd)}${badgeHtml(f,L)}</button>
+    <div><div class="meta2"><span>${esc(client(f,l))}</span><em>${esc(year(fd))}</em></div>
+    <h3>${esc(fd.title)}</h3><p>${esc(fd.summary)}</p>
+    <div class="tools">${(f.tools||[]).map(x=>`<span>${esc(x)}</span>`).join('')}</div>
+    <div class="acts">${fk.screen?`<a class="btn" href="${esc(demoUrl(f))}" target="_blank" rel="noopener">${play}${esc(f.demo==='animated'?L.screenAnim:L.screen)}</a>`:''}<button class="tlink" type="button" id="featread">${esc(L.readProject)}</button></div></div>`;
+  $('featimg').onclick=()=>openModal(f); $('featread').onclick=()=>openModal(f);
+  const g=$('pgrid'); g.innerHTML='';
+  S.projects.slice(1).forEach(p=>{
+    const d=p[l]||p.en, c=document.createElement('button'); c.type='button'; c.className='pc';
+    c.innerHTML=`<span class="frame">${frame(p,d)}${badgeHtml(p,L)}</span><span class="meta2"><span>${esc(client(p,l))}</span><em>${esc(year(d))}</em></span><h3>${esc(d.title)}</h3><p>${esc(d.summary)}</p><span class="more">${esc(L.readProject)}</span>`;
+    c.onclick=()=>openModal(p); g.appendChild(c);
   });
-  ul.querySelectorAll('.row').forEach(b=>{
-    const i=+b.dataset.i;
-    b.addEventListener('mouseenter',()=>select(i));
-    b.addEventListener('focus',()=>select(i));
-    b.addEventListener('click',()=>{ if(window.matchMedia('(max-width:900px)').matches||cur===i) openModal(S.projects[i]); else select(i); });
-  });
-  preview(cur,true);
-}
-function select(i){ if(i===cur) return; cur=i; document.querySelectorAll('#pindex .row').forEach(r=>r.classList.toggle('on',+r.dataset.i===i)); preview(i); }
-function preview(i,instant){
-  const p=S.projects[i], l=lang, d=p[l]||p.en, L=S.labels[l], k=p.links||{}, cover=(p.images||[])[0];
-  const build=()=>{
-    $('prev').innerHTML=`<div class="img">${cover?`<img src="${esc(cover)}" alt="${esc(d.title)}">`:`<div style="height:100%;display:grid;place-items:center">${icon(p.icon)}</div>`}</div>
-      ${k.screen?`<div class="lab"><i class="${p.demo==='animated'?'anim':''}"></i>${esc(p.demo==='animated'?L.badgeAnim:L.badge)}</div>`:''}
-      <h3>${esc(d.summary)}</h3>
-      <div class="tools">${(p.tools||[]).map(x=>`<span>${esc(x)}</span>`).join('')}</div>
-      <div class="acts">${k.screen?`<a class="btn" href="${esc(demoUrl(p))}" target="_blank" rel="noopener">${play}${esc(p.demo==='animated'?L.screenAnim:L.screen)}</a>`:''}<button class="tlink" type="button" id="readp">${esc(L.readProject)}</button></div>`;
-    $('readp').onclick=()=>openModal(p);
-  };
-  const img=$('prev').querySelector('.img img');
-  if(instant||!img){build();return;}
-  img.classList.add('fade'); setTimeout(build,140);
 }
 
 const modal=$('modal'), bd=$('mbackdrop');
