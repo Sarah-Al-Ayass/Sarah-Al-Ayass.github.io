@@ -81,6 +81,13 @@ nav .wrap{display:flex;align-items:center;gap:38px;height:84px}
 .trust .wrap{display:flex;align-items:baseline;gap:44px;flex-wrap:wrap;padding-top:24px;padding-bottom:24px;font-family:var(--serif);font-size:21px;color:var(--champ)}
 .trust small{font-family:var(--sans);font-size:14px;color:var(--mute)}
 
+/* no photo yet: no arch, availability shown as one line above the name */
+.hero.nophoto .wrap{grid-template-columns:1fr}
+.hero.nophoto .side{grid-column:1;grid-row:auto;order:-1;margin:0 0 30px;align-items:flex-start}
+.hero.nophoto .arch,.hero.nophoto .stem{display:none}
+.hero.nophoto .avail{text-align:left;max-width:none;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.hero.nophoto .avail b{margin:0;font-size:20px}
+
 /* sections */
 section{padding:128px 0;position:relative}
 .sh{display:flex;align-items:baseline;gap:32px;flex-wrap:wrap;margin-bottom:56px}
@@ -186,6 +193,25 @@ html.lock,html.lock body{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.hero *{animation:none!important;opacity:1!important;transform:none!important}html{scroll-behavior:auto}}
 
 /* responsive */
+/* alternating backgrounds, as on the original site */
+.light{--ivory:#0E1A2F;--champ:#1E2A40;--soft:#4A5568;--mute:#6B7486;--gold2:#8F6B22;--line:rgba(154,117,36,.4);--hair:rgba(14,26,47,.11);background:#F6F5F1;color:#1E2A40}
+.light.off{background:#F6F5F1}
+.light .frame{background:transparent;border-color:rgba(154,117,36,.35)}
+.light .btn:hover{background:#0E1A2F;border-color:#0E1A2F;color:#fff}
+#skills.light{background:#F6F5F1;border-top:1px solid rgba(14,26,47,.08)}
+.quote{padding:84px 0;text-align:left!important;background:linear-gradient(160deg,#0E1A2F,#07090F)}
+.quote q{margin:0;max-width:760px;border-left:3px solid var(--gold);padding:6px 0 6px 26px;font-size:clamp(24px,2.4vw,32px);line-height:1.4}
+.quote small{margin-top:12px;padding-left:29px}
+#contact.light .card{background:radial-gradient(600px 300px at 50% 0%,rgba(198,161,91,.18),transparent 70%),linear-gradient(160deg,#16294A,#07090F);border-radius:22px;padding:64px 60px;--ivory:#F3EBDD;--champ:#E9DDC4;--soft:#B9C2D2;--mute:#8E9AB0;--gold2:#DDBF86;--line:rgba(198,161,91,.38);--hair:rgba(233,221,196,.13);color:var(--champ)}
+/* option C: all projects in a 2-column grid */
+.pgrid.two{grid-template-columns:repeat(2,minmax(0,1fr));gap:72px 48px;margin-top:0}
+.pgrid.two .pc h3{font-size:30px}
+.pgrid.two .pc p{-webkit-line-clamp:3}
+
+
+.light .live{color:#F3EBDD;background:rgba(14,26,47,.92);border-color:rgba(198,161,91,.45)}
+.light .live.anim i{background:#DDBF86}
+#contact.light .mail{font-size:clamp(22px,2.2vw,30px);overflow-wrap:normal;word-break:normal}
 @media (max-width:1100px){
   .pgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .feat{gap:40px}
@@ -211,7 +237,9 @@ html.lock,html.lock body{overflow:hidden}
   .trust small{flex-basis:100%}
   section{padding:84px 0}
   .feat{grid-template-columns:1fr;gap:26px;padding-bottom:48px}
-  .pgrid{grid-template-columns:1fr;gap:48px;margin-top:48px}
+  .pgrid,.pgrid.two{grid-template-columns:1fr;gap:48px;margin-top:0}
+  #contact.light .mail{font-size:22px;overflow-wrap:anywhere}
+  #contact.light .card{padding:40px 24px}
   .skills{grid-template-columns:1fr}
   .sk,.sk:not(:nth-child(3n+1)){padding:24px 0;border-left:0}
   .item{grid-template-columns:1fr;gap:6px}
@@ -253,10 +281,9 @@ html.lock,html.lock body{overflow:hidden}
 </div></header>
 <div class="trust"><div class="wrap" id="trust"></div></div>
 
-<section id="projects"><div class="wrap">
+<section id="projects" class="light off"><div class="wrap">
   <div class="sh"><h2 data-l="projects"></h2><p data-l="projectsLead"></p></div>
-  <div class="feat" id="pfeat"></div>
-  <div class="pgrid" id="pgrid"></div>
+  <div class="pgrid two" id="pgrid"></div>
 </div></section>
 
 <dialog id="modal" aria-labelledby="m-title">
@@ -279,18 +306,18 @@ html.lock,html.lock body{overflow:hidden}
   <div class="skills" id="skillgrid"></div>
 </div></section>
 
-<section id="experience"><div class="wrap">
+<section id="experience" class="light"><div class="wrap">
   <div class="sh"><h2 data-l="hExperience"></h2></div>
   <div class="tl" id="timeline"></div>
 </div></section>
 
 <div class="quote"><div class="wrap"><q id="quote"></q><small id="qauthor"></small></div></div>
 
-<section id="contact"><div class="wrap">
-  <div class="ct">
+<section id="contact" class="light off"><div class="wrap">
+  <div class="card"><div class="ct">
     <div><h2 id="c-title"></h2><p id="c-text"></p></div>
-    <div><a class="mail" id="c-mail" href="#"></a><div class="clinks" id="c-links"></div></div>
-  </div>
+    <div><a class="btn" id="c-mail" href="#"></a><div class="clinks" id="c-links"></div></div>
+  </div></div>
 </div></section>
 
 <footer><div class="wrap"><span class="sig" id="foot"></span><span>© <span id="yr"></span> · <span id="city"></span></span></div></footer>
@@ -337,6 +364,7 @@ function render(l){
   document.querySelectorAll('.lang button').forEach(b=>b.classList.toggle('on',b.dataset.lang===l));
   document.title=`${P.firstName} ${P.lastName} · ${tx(P.role,l)}`;
   $('name').innerHTML=`<span>${esc(P.firstName)}</span><span>${esc(P.lastName)}</span>`;
+  $('top').classList.toggle('nophoto',!P.photo);
   $('portrait').innerHTML=P.photo?`<img src="${esc(P.photo)}" alt="${esc(P.firstName+' '+P.lastName)}">`:`${net()}<span class="ini">${esc((P.firstName[0]||'')+(P.lastName[0]||''))}</span>`;
   $('badge').textContent=tx(P.badge,l).replace(/^(Open to a |Ouverte à une )/,'').replace(/^./,c=>c.toUpperCase());
   $('role').textContent=tx(P.role,l);
@@ -348,12 +376,12 @@ function render(l){
   renderIndex(l);
   $('skillgrid').innerHTML=S.skills.map(g=>`<div class="sk"><h3>${esc(tx(g.group,l))}</h3><ul>${g.items.map(i=>`<li>${esc(tx(i,l))}</li>`).join('')}</ul></div>`).join('');
   $('timeline').innerHTML=S.experience.map(e=>`<div class="item"><div class="when">${esc(tx(e.when,l))}</div><div><h3>${esc(tx(e.title,l))}</h3><div class="where">${esc(tx(e.place,l))}</div>${(e.points||[]).length?`<ul>${e.points.map(p=>`<li>${esc(tx(p,l))}</li>`).join('')}</ul>`:''}</div></div>`).join('');
-  $('quote').textContent=tx(S.quote.text,l).replace(/^[“«]\s?|\s?[”»]$/g,''); $('qauthor').textContent=S.quote.author;
+  $('quote').textContent=tx(S.quote.text,l); $('qauthor').textContent='— '+S.quote.author;
   const ct=tx(S.contact.title,l);
   $('c-title').innerHTML=l==='fr'?'<span style="display:block;font-style:normal;padding:0">Travaillons</span><span>ensemble.</span>':'<span style="display:block;font-style:normal;padding:0">Let’s work</span><span>together.</span>';
   $('c-title').setAttribute('aria-label',ct);
   $('c-text').textContent=tx(S.contact.text,l);
-  $('c-mail').textContent=P.email; $('c-mail').href='mailto:'+P.email;
+  $('c-mail').textContent=L.email; $('c-mail').href='mailto:'+P.email; $('c-mail').title=P.email;
   $('c-links').innerHTML=`${P.linkedin?`<a class="tlink" href="${esc(P.linkedin)}" target="_blank" rel="noopener">LinkedIn</a>`:''}<a class="tlink" href="${esc(cv)}" download>${esc(L.cv)}</a>${P.github?`<a class="tlink" href="${esc(P.github)}" target="_blank" rel="noopener">GitHub</a>`:''}`;
   $('foot').textContent=`${P.firstName} ${P.lastName}`; $('city').textContent=P.city||'';
   modal.querySelector('.mclose').setAttribute('aria-label',L.close);
@@ -367,15 +395,9 @@ function demoUrl(p){const k=p.links||{};return k.screen?k.screen+(k.screen.index
 function badgeHtml(p,L){const k=p.links||{};return k.screen?`<span class="live${p.demo==='animated'?' anim':''}"><i></i>${esc(p.demo==='animated'?L.badgeAnim:L.badge)}</span>`:'';}
 function frame(p,d){const cover=(p.images||[])[0];return `<div class="im">${cover?`<img src="${esc(cover)}" alt="${esc(d.title)}" loading="lazy">`:`<div class="ph">${icon(p.icon)}</div>`}</div>`;}
 function renderIndex(l){
-  const L=S.labels[l], f=S.projects[0], fd=f[l]||f.en, fk=f.links||{};
-  $('pfeat').innerHTML=`<button class="frame" type="button" id="featimg" aria-label="${esc(fd.title)}">${frame(f,fd)}${badgeHtml(f,L)}</button>
-    <div><div class="meta2"><span>${esc(client(f,l))}</span><em>${esc(year(fd))}</em></div>
-    <h3>${esc(fd.title)}</h3><p>${esc(fd.summary)}</p>
-    <div class="tools">${(f.tools||[]).map(x=>`<span>${esc(x)}</span>`).join('')}</div>
-    <div class="acts">${fk.screen?`<a class="btn" href="${esc(demoUrl(f))}" target="_blank" rel="noopener">${play}${esc(f.demo==='animated'?L.screenAnim:L.screen)}</a>`:''}<button class="tlink" type="button" id="featread">${esc(L.readProject)}</button></div></div>`;
-  $('featimg').onclick=()=>openModal(f); $('featread').onclick=()=>openModal(f);
+  const L=S.labels[l];
   const g=$('pgrid'); g.innerHTML='';
-  S.projects.slice(1).forEach(p=>{
+  S.projects.forEach(p=>{
     const d=p[l]||p.en, c=document.createElement('button'); c.type='button'; c.className='pc';
     c.innerHTML=`<span class="frame">${frame(p,d)}${badgeHtml(p,L)}</span><span class="meta2"><span>${esc(client(p,l))}</span><em>${esc(year(d))}</em></span><h3>${esc(d.title)}</h3><p>${esc(d.summary)}</p><span class="more">${esc(L.readProject)}</span>`;
     c.onclick=()=>openModal(p); g.appendChild(c);
